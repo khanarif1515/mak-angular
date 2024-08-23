@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('env=', environment.DOMAIN_URL);
-    console.log('var=', environment.DOMAIN_URL);
+    console.log('var=', this.vars.domain_details);
     this.qParams = { ...this.actRoute.snapshot.queryParams };
     this.setSeo();
     // this.getDomain();
