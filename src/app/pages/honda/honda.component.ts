@@ -1,19 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ApiService } from 'src/app/shared';
+import { ActivatedRoute } from '@angular/router';
 import { InrFormatPipe } from 'src/app/shared/pipes/inr-format/inr-format.pipe';
+import { ApiService, UtilService } from 'src/app/shared/services';
 import { API_URLS } from 'src/environments/api-urls';
 
 @Component({
-  selector: 'app-amaze-mh-12-pq-4787',
+  selector: 'app-honda',
   standalone: true,
   imports: [CommonModule, InrFormatPipe, FormsModule],
-  templateUrl: './amaze-mh-12-pq-4787.component.html',
-  styleUrl: './amaze-mh-12-pq-4787.component.scss'
+  templateUrl: './honda.component.html',
+  styleUrl: './honda.component.scss'
 })
-export class AmazeMH12PQ4787Component {
+export class HondaComponent {
 
+  customTag = '';
   amazeCost: any;
   emiData: any[] = [];
   filterMonths = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -22,18 +24,21 @@ export class AmazeMH12PQ4787Component {
   selectedMonth = '';
   selectedYear = '';
   otherSelectedFilter = 0;
-  filteredEmiData: any[] = []
+  filteredEmiData: any[] = [];
 
   constructor(
-    private api: ApiService
+    private actRoute: ActivatedRoute,
+    private api: ApiService,
+    private util: UtilService
   ) { }
 
   ngOnInit() {
+    this.customTag = this.actRoute.snapshot.params?.['tag'];
     this.getDetails();
   }
 
   getDetails() {
-    this.api.get(API_URLS.GET_HONDA_AMAZE_DETAILS).subscribe({
+    this.api.get('honda/' + this.customTag).subscribe({
       next: (res: any) => {
         this.amazeCost = res?.amazeCost;
         this.emiData = res?.emiData || [];
@@ -49,6 +54,7 @@ export class AmazeMH12PQ4787Component {
         console.log(res);
       },
       error: (err: any) => {
+        this.util.router.navigate(['/404']);
         console.log(err);
       }
     });

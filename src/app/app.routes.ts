@@ -5,6 +5,7 @@ export const routes: Routes = [
   {
     path: '', component: LayoutComponent,
     children: [
+      { path: 'honda', loadChildren: () => import('./pages/honda/honda.route').then(r => r.routes)},
       { path: 'thankyou', loadChildren: () => import('./pages/thankyou/thankyou.routes').then(r => r.routes) },
       { path: 'stories', loadChildren: () => import('./pages/story/story.routes').then(r => r.routes) },
       { path: '404', loadChildren: () => import('./pages/not-found/not-found.routes').then(r => r.routes) },

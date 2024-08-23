@@ -36,20 +36,20 @@ export class HttpInterService implements HttpInterceptor {
     }
 
     if (isPlatformServer(this.platformId)) {
-      const serverReq = this.injector.get(REQUEST);
-      services.vars.domain_details = {
-        domain_name: `${serverReq.get('X-Custom-Header')}`,
-        domain_url: `${this.getProtocol(serverReq)}://${serverReq.get('X-Custom-Header')}`,
-        full_url: `${this.getProtocol(serverReq)}://${serverReq.get('X-Custom-Header')}${serverReq.url}`
-      };
-      if (services.vars.domain_details.domain_name) {
-        services.util.setDomainDetails();
-      }
-      const storedResponse: string = this._transferState.get(makeStateKey(req.url), null as any);
-      if (storedResponse) {
-        const response = new HttpResponse({ body: storedResponse, status: 200 });
-        return of(response);
-      }
+      // const serverReq = this.injector.get(REQUEST);
+      // services.vars.domain_details = {
+      //   domain_name: `${serverReq.get('X-Custom-Header')}`,
+      //   domain_url: `${this.getProtocol(serverReq)}://${serverReq.get('X-Custom-Header')}`,
+      //   full_url: `${this.getProtocol(serverReq)}://${serverReq.get('X-Custom-Header')}${serverReq.url}`
+      // };
+      // if (services.vars.domain_details.domain_name) {
+      //   services.util.setDomainDetails();
+      // }
+      // const storedResponse: string = this._transferState.get(makeStateKey(req.url), null as any);
+      // if (storedResponse) {
+      //   const response = new HttpResponse({ body: storedResponse, status: 200 });
+      //   return of(response);
+      // }
     }
     return this.nextHandler(authReq, next);
   }
