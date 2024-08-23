@@ -39,6 +39,33 @@ body {
   pointer-events: none;
 }
 
+.skeleton {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  display: inline-block;
+  height: 20px;
+  width: 100%;
+  animation: skeleton-loading 1.2s infinite linear;
+}
+.skeleton-text {
+  height: 1em;
+  margin-bottom: 10px;
+}
+.skeleton-text:last-child {
+  margin-bottom: 0;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #f0f0f0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
 
 @media only screen and (min-width: 767px) {
   .mobile-only {

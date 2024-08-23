@@ -25,6 +25,7 @@ export class HondaComponent {
   selectedYear = '';
   otherSelectedFilter = 0;
   filteredEmiData: any[] = [];
+  isDataLoading = true;
 
   constructor(
     private actRoute: ActivatedRoute,
@@ -51,10 +52,12 @@ export class HondaComponent {
           }
         });
         this.filteredEmiData = this.emiData;
+        this.isDataLoading = false;
         console.log(res);
       },
       error: (err: any) => {
         this.util.router.navigate(['/404']);
+        this.isDataLoading = false;
         console.log(err);
       }
     });
