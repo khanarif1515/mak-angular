@@ -40,18 +40,23 @@ body {
 }
 
 .skeleton {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 20px;
+  display: inline-block;
   background-color: #e0e0e0;
   border-radius: 4px;
-  display: inline-block;
-  height: 20px;
-  width: 100%;
   animation: skeleton-loading 1.2s infinite linear;
 }
 .skeleton-text {
+  width: 100% !important;
+  max-width: 100% !important;
   height: 1em;
   margin-bottom: 10px;
 }
 .skeleton-text:last-child {
+  width: 100% !important;
+  max-width: 100% !important;
   margin-bottom: 0;
 }
 
