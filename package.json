@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:dev": "ng build --development",
+    "build:prod": "ng build --production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:mak-angular": "node dist/mak-angular/server/server.mjs"
