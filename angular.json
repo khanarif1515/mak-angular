@@ -71,6 +71,17 @@
                   "with": "src/environments/environment.dev.ts"
                 }
               ],
+              "optimization": true,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
+            "local": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.ts"
+                }
+              ],
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
@@ -86,9 +97,12 @@
             },
             "development": {
               "buildTarget": "mak-angular:build:development"
+            },
+            "local": {
+              "buildTarget": "mak-angular:build:local"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "local"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"
