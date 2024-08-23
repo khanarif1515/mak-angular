@@ -1,8 +1,8 @@
 export const environment = {
   name: 'staging',
   production: false,
-  API_BASE_URL: 'https://mak-api.vercel.app/api/',
-  DOMAIN_URL: 'https://mak-ui.vercel.app',
+  API_BASE_URL: 'https://dev-mak-api.vercel.app/api/',
+  DOMAIN_URL: 'https://dev-mak-ui.vercel.app',
   bugsnag: 'e9ac81b71cbf1cef3225a069b2fcc3d4',
   clevertap_id: 'TEST-84R-5W8-476Z',
   facebook_id: '287403324698248',

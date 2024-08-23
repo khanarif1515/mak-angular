@@ -1,0 +1,116 @@
+
+<div class="wrap">
+  <div class="filter-header">
+    <div class="row">
+      <div class="filter">
+        <label for="month">Month:</label>
+        <select (change)="filterData()" [(ngModel)]="selectedMonth">
+          @for (item of filterMonths; track $index) {
+            <option [value]="item">{{item}}</option>
+          }
+        </select>
+      </div>
+      <div class="filter">
+        <label for="year">Year:</label>
+        <select (change)="filterData()" [(ngModel)]="selectedYear">
+          @for (item of filterYears; track $index) {
+            <option [value]="item">{{item}}</option>
+          }
+        </select>
+      </div>
+      <div class="filter">
+        <label for="other">Paid Status:</label>
+        <select (change)="filterData()" [(ngModel)]="otherSelectedFilter">
+          @for (item of filterOthers; track $index) {
+            <option [value]="item.id">{{item.val}}</option>
+          }
+        </select>
+      </div>
+    </div>
+    @if (selectedMonth || selectedYear || otherSelectedFilter !== 0) {
+      <div class="row">
+        <div class="filter">
+          <div class="filter-reset">
+            <button (click)="resetFilter()">Show all</button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="content">
+    @if (!selectedMonth && !selectedYear && +otherSelectedFilter === 0) {
+      <div class="cost">
+        <table>
+          <caption>{{amazeCost?.caption}}</caption>
+          <thead>
+            <tr>
+              <th>Source</th>
+              <th>Descriptio</th>
+              <th>Amount</th>
+              <th>Recieved</th>
+              <th>Paid</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of amazeCost?.data; track $index) {
+              <tr [ngClass]="{'b-bottom-3': item?.borderBottom, 'font-b': $index === amazeCost?.data?.length-1}">
+                <td>{{item?.src}}</td>
+                <td>{{item?.desc}}</td>
+                <td>{{item?.amt}}</td>
+                <td>{{item?.recieved}}</td>
+                <td>{{item?.paid}}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+        <hr>
+      </div>
+    }
+
+    <div class="emi-table">
+      @for (emi of filteredEmiData; track $index; let i = $index) {
+        <table>
+          <caption>{{emi?.title}}</caption>
+          <thead>
+            <tr><th>Source</th><th>Description</th><th>Net Total</th><th>Total Amount</th></tr>
+          </thead>
+          <tbody>
+            @if (emi?.previousPending) {
+              <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: 'previous-row', src: 'Previous', desc: 'Remaining', netTotal: emi?.previousPending | inrFormat, total: emi?.previousPending | inrFormat}}" />
+            }
+            @for (rowData of emi?.rowData || []; track $index; let j = $index) {
+              @if (rowData?.src) {
+                <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: (j!==0 || emi?.previousPending ?'b-top-3' : ''), src: rowData?.src, desc: '', netTotal: '', total: ''}}" />
+              }
+              @for (row of rowData?.rows; track $index; let k = $index) {
+                <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: !rowData?.src && k===0 ? 'b-top-3': '', src: row?.src, desc: row?.desc, netTotal: row?.amt | inrFormat, total: row?.total | inrFormat}}" />
+              }
+              @if (rowData?.src) {
+                <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: '', src: '', desc: '', netTotal: 'Total =>', total: rowData?.total | inrFormat}}" />
+              }
+            }
+            <ng-container [ngTemplateOutlet]="rowTemplate" />
+            <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: 'payable-row b-top-3', src: '', desc: 'Total Payable', netTotal: '=>', total: emi?.payable | inrFormat}}" />
+            <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: 'paid-row', src: '', desc: 'Paid', netTotal: '=>', total: emi?.paid | inrFormat}}" />
+            <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: 'remaining-row', src: '', desc: 'Remaining Amount', netTotal: '=>', total: emi?.remaining | inrFormat}}" />
+          </tbody>
+        </table>
+        <hr>
+      }
+    </div>
+
+    @if (filteredEmiData.length === 0) {
+      <div class="no-data">No records found!</div>
+    }
+  </div>
+</div>
+
+<ng-template #rowTemplate let-data="rowData">
+  <tr class="{{data?.class}}">
+    <td class="source">{{data?.src}}</td>
+    <td class="description">{{data?.desc}}</td>
+    <td class="net-total">{{data?.netTotal}}</td>
+    <td class="total-amount">{{data?.total}}</td>
+  </tr>
+</ng-template>

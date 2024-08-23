@@ -1,0 +1,86 @@
+import { IFundraiser } from "./fundraiser.model";
+
+export interface IOrder {
+  auto_pay_m1?: any;
+  bulkdonation?: any[];
+  campaign?: IFundraiser;
+  campaign_id?: number;
+  cause_id?: number;
+  checksum?: string;
+  coupon?: any;
+  creator_entity_details_id?: number;
+  currency?: number;
+  device?: null;
+  donated_amount?: number;
+  donated_amount_local?: number;
+  donor?: IDonor;
+  donor_address?: string;
+  donor_city?: null;
+  donor_country?: string;
+  donor_display_name?: string;
+  donor_email?: string;
+  donor_entity_details_id?: number;
+  donor_first_name?: string;
+  donor_phone?: string;
+  donor_pincode?: string;
+  donor_state?: null;
+  donoravtar?: any;
+  entity_details_id?: number;
+  id?: number;
+  is_anonymous?: number;
+  iso_currency?: string;
+  ketto_commission?: string;
+  offer?: boolean;
+  order_id?: string;
+  payment_gateway?: string;
+  payment_mode?: string;
+  payment_mode_value?: string;
+  private_key?: string;
+  recurring?: any;
+  rewards_id?: number;
+  sub_campaign_id?: number;
+  subscription_id?: any;
+  tip_amount?: number;
+  tip_amount_inr?: number;
+  tip_amount_local?: number;
+  transaction_return_status?: string;
+  visited_thankyou?: boolean;
+}
+
+export interface IDonor {
+  access_url?: string;
+  activation?: {
+    creation_date?: string;
+    order_details_id?: string;
+  };
+  address_1?: string;
+  address_2?: string;
+  address_3?: string;
+  age?: string;
+  city?: string;
+  comments?: any[];
+  disable_foreign_donation?: number;
+  display_type?: string;
+  email?: string;
+  entity_type?: string;
+  extension?: string;
+  fname?: string;
+  full_name?: string;
+  gender?: string;
+  id?: number;
+  is_subscribed?: number;
+  last_communication_date?: string;
+  lname?: string;
+  name?: string;
+  no_80g?: boolean;
+  phone_1?: string;
+  phone_2?: string;
+  pincode?: string;
+  priority?: string;
+  status_flag?: number;
+  tax_benefit?: boolean;
+  updation_time?: string;
+  user_details_id?: number;
+  user_role?: string;
+  username?: string;
+}
