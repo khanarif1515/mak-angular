@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ICurrency } from 'src/app/shared/model/currency.model';
 import { IFundraiser } from 'src/app/shared/model/fundraiser.model';
@@ -10,7 +10,7 @@ import { API_URLS } from 'src/environments/api-urls';
 @Component({
   selector: 'app-story',
   standalone: true,
-  imports: [RouterModule],
+  imports: [],
   templateUrl: './story.component.html',
   styleUrl: './story.component.scss'
 })

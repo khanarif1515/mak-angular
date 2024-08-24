@@ -1,5 +1,5 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { ILayoutConfig } from '../../model/layout-config.model';
+import { ILayoutConfig, IPageNames } from '../../model/layout-config.model';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { IHost } from '../../model/host.model';
@@ -42,7 +42,7 @@ export class VariablesService {
   isToken = false;
   isVariableLogin = false;
   metaDataOfPage: any;
-  pageName = '';
+  pageName: typeof IPageNames = '';
   paymentCurrency = '';
   poweredBy = 'Ketto';
   previousPageUrl = '';

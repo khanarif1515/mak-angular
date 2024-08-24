@@ -1,1 +1,5 @@
-<p>story works!</p> <button routerLink="/">go to Home</button>
+@if (!fundraiser) {
+  <div class="skeleton skeleton-text"></div>
+} @else {
+  <p>story works!</p>
+}

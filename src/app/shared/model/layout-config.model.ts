@@ -1,3 +1,5 @@
+export const IPageNames: 'home' | 'honda' | 'page_not_found' | 'stories' | 'thank_you' | '' = '';
+
 export interface ILayoutConfig {
   headerTopSticky?: boolean;
   logoNavigate?: boolean;
@@ -29,14 +31,18 @@ export const DefaultLayoutConfig: ILayoutConfig = {
 export const PageLayoutConfig: any = {
   'home': {
     ...DefaultLayoutConfig,
+    showFooter: true,
+    showHeader: true
   },
   'stories': {
     ...DefaultLayoutConfig,
     showFooter: true,
-    showHeader: true,
+    showHeader: true
   },
   'thank_you': {
     ...DefaultLayoutConfig,
+    showFooter: true,
+    showHeader: true
   },
   'page_not_found': {
     ...DefaultLayoutConfig,

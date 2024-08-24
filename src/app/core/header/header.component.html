@@ -1,1 +1,11 @@
-<p>header works!</p>
+<div class="wrap">
+  <div class="content">
+    <div class="routes">
+      @for (item of links; track $index) {
+      <div class="route">
+        <button [routerLink]="item?.link" [disabled]="router.url === item?.link">{{item?.label}}</button>
+      </div>
+      }
+    </div>
+  </div>
+</div>
