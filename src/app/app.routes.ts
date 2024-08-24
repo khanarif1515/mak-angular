@@ -5,12 +5,37 @@ export const routes: Routes = [
   {
     path: '', component: LayoutComponent,
     children: [
-      { path: 'honda', loadChildren: () => import('./pages/honda/honda.route').then(r => r.routes)},
-      { path: 'thankyou', loadChildren: () => import('./pages/thankyou/thankyou.routes').then(r => r.routes) },
-      { path: 'stories', loadChildren: () => import('./pages/story/story.routes').then(r => r.routes) },
-      { path: '404', loadChildren: () => import('./pages/not-found/not-found.routes').then(r => r.routes) },
-      { path: '', pathMatch: 'full', loadChildren: () => import('./pages/home/home.routes').then(r => r.routes) },
-      { path: '**', redirectTo: '', pathMatch: 'full' }
+      {
+        path: 'honda/:tag',
+        loadComponent: () => import('./pages/honda/honda.component').then((c) => c.HondaComponent),
+        data: { page_name: 'honda' }
+      },
+      {
+        path: 'thankyou',
+        loadComponent: () => import('./pages/thankyou/thankyou.component').then((c) => c.ThankyouComponent),
+        data: { page_name: 'thank_you' }
+      },
+      {
+        path: 'stories/:tag',
+        loadComponent: () => import('./pages/story/story.component').then((c) => c.StoryComponent),
+        data: { page_name: 'stories' }
+      },
+      {
+        path: '404',
+        loadComponent: () => import('./pages/not-found/not-found.component').then((c) => c.NotFoundComponent),
+        data: { page_name: 'page_not_found' }
+      },
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () => import('./pages/home/home.component').then((c) => c.HomeComponent),
+        data: { page_name: 'home' }
+      },
+      {
+        path: '**',
+        redirectTo: '',
+        pathMatch: 'full'
+      }
     ]
   }
 ];
