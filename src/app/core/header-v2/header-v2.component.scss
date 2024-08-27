@@ -1,0 +1,113 @@
+.wrap {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background: rgb(239 239 239 / 84%);
+  border: 1px solid rgb(239 239 239 / 84%);
+  box-shadow: -4px -14px 66px 0px rgba(255, 255, 255, 0.43) inset, 0px 2px 8px 0px rgba(38, 38, 38, 0.20);
+  z-index: 1000;
+  transition: top 0.2s;
+  border-radius: 0px 0px 54px 54px;
+  .content {
+    width: calc(100% - 48px);
+    max-width: 1160px;
+    padding: 16px 0;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    .left-section {
+      .logo {
+        .link {
+          max-width: 250px;
+          height: 72px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+        }
+      }
+    }
+    .right-section {
+      margin-left: auto;
+      .btns {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        button {
+          display: flex;
+          align-items: center;
+          height: 60px;
+          padding-left: 40px;
+          padding-right: 40px;
+          border-radius: 32px;
+          font-size: 17px;
+          font-weight: 700;
+          line-height: 120%;
+          letter-spacing: -0.34px;
+        }
+        .go-ketto {
+          border: 1px solid #CCC;
+          background: #FCFCFC;
+          color: #288B91;
+          .material-symbols-rounded {
+            margin-left: 8px;
+            font-size: 20px;
+          }
+        }
+        .go-all-fund {
+          border: 2px solid rgba(8, 69, 68, 0.00);
+          background: var(--primary-color);
+          box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.16);
+          color: #FCFCFC;
+        }
+      }
+    }
+  }
+}
+
+
+@media (max-width: 768px) {
+  .wrap {
+    border-radius: 0px 0px 24px 24px;
+    .content {
+      padding: 10px 0;
+      .left-section {
+        .logo {
+          .link {
+            width: 115px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+            }
+          }
+        }
+      }
+      .right-section {
+        .btns {
+          button {
+            height: 32px;
+            padding-left: 16px;
+            padding-right: 16px;
+            font-size: 10px;
+            font-weight: 700;
+            line-height: 130%;
+          }
+          .go-ketto {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+<div class="mission-wrap">
+  <div class="content">
+    <div class="text">
+      <div class="label">Our Mission</div>
+      <div class="title">{{data?.missionCard?.title}}</div>
+      <div class="desc">{{data?.missionCard?.subtitle}}</div>
+    </div>
+    @if (!vars.isMobile) {
+      <div class="mission-cards">
+        <ng-container *ngTemplateOutlet="templateRef" />
+      </div>
+    } @else {
+      <div class="mission-cards slide">
+        <ngx-glide [showArrows]="false" [showBullets]="false" [gap]="10" type="carousel" [perView]="1.4"
+          [bound]="false" arrowLeftLabel="" arrowRightLabel="">
+          <ng-container *ngTemplateOutlet="templateRef" />
+        </ngx-glide>
+      </div>
+    }
+  </div>
+</div>
+
+<ng-template #templateRef>
+  @for (item of cards; track $index) {
+    <div class="card-{{$index+1}}" (click)="read(item, dialogTemplateRef)">
+      <img ngSrc="{{item?.cover_image}}" width="250" height="192" alt="card" />
+      <div class="back-shadow">
+        <div class="card-text">
+          <div class="title">{{item?.title}}</div>
+          <div class="read"><span>Read more</span><em class="material-symbols-rounded">arrow_forward</em></div>
+        </div>
+      </div>
+    </div>
+  }
+</ng-template>
+
+<ng-template #dialogTemplateRef>
+  <div class="temp-wrap">
+    <div class="close-btn" (click)="dialog.closeAll()"><em class="material-symbols-rounded">close</em></div>
+    <div class="image"><img ngSrc="{{selectedCard?.image}}" width="250" height="192" alt="card" /></div>
+    <div class="text">
+      <div class="title">{{selectedCard?.title}}</div>
+      <div class="desc">{{selectedCard?.desc}}</div>
+    </div>
+  </div>
+</ng-template>

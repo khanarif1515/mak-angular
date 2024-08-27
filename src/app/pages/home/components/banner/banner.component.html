@@ -1,0 +1,37 @@
+<div class="wrap">
+  <div class="content">
+    <div class="banner">
+      @if (vars.isMobile) {
+        <img ngSrc="/assets/images/home-banner-mob.png" width="100" height="412" alt="banner" priority />
+      } @else {
+        <img ngSrc="/assets/images/home-banner.png" width="100" height="720" alt="banner" priority />
+      }
+      <div class="text-fixed">
+        <div class="text">
+          <div class="title"><h1>{{data?.banner?.title}}</h1></div>
+          <div class="desc" [innerHTML]="data?.banner?.subtitle">
+          </div>
+          <!-- <div class="contri-btn">
+            <button (click)="goToAllFundraisers()" mat-button><span>Contribute Now</span><em class="material-symbols-rounded">arrow_forward</em></button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="impact-wrap">
+    <div class="content">
+      <div class="left">
+        <div class="title">3.2 Lakh+</div>
+        <div class="desc">Fundraisers</div>
+      </div>
+      <div class="middle">
+        <div class="title">72 Lakh+</div>
+        <div class="desc">Donors base</div>
+      </div>
+      <div class="right">
+        <div class="title">32 Lakh+</div>
+        <div class="desc">lives impacted</div>
+      </div>
+    </div>
+  </div>
+</div>

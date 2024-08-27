@@ -1,0 +1,309 @@
+
+.mission-wrap {
+  width: 100%;
+  background: #EEE;
+  position: relative;
+  .content {
+    width: calc(100% - 48px);
+    max-width: 1040px;
+    margin: auto;
+    padding: 45px 0;
+    .text {
+      max-width: 445px;
+      .label {
+        margin-bottom: 16px;
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 100%;
+        color: #404040;
+        letter-spacing: -0.48px;
+      }
+      .title {
+        margin-bottom: 16px;
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 140%;
+        color: #262626;
+      }
+      .desc {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 150%;
+        color: #404040;
+        letter-spacing: -0.4px;
+      }
+    }
+    .mission-cards {
+      .card-1,
+      .card-2,
+      .card-3,
+      .card-4 {
+        position: relative;
+        width: 100%;
+        border-radius: 24px;
+        cursor: pointer;
+        img {
+          width: inherit;
+          height: inherit;
+          border-radius: inherit;
+          object-fit: cover;
+        }
+        .back-shadow {
+          width: inherit;
+          height: inherit;
+          position: absolute;
+          top: 0;
+          left: 0;
+          padding: 12px 16px;
+          border-radius: inherit;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.50) 71%), rgba(0, 0, 0, 0);
+          .card-text {
+            width: calc(100% - 32px);
+            position: absolute;
+            bottom: 10px;
+            color: #FCFCFC;
+            .title {
+              margin-bottom: 8px;
+              font-size: 17px;
+              font-weight: 700;
+              line-height: 120%;
+              letter-spacing: -0.34px;
+            }
+            .read {
+              width: 95px;
+              margin-left: auto;
+              display: flex;
+              align-items: self-start;
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 150%;
+              letter-spacing: -0.28px;
+              cursor: pointer;
+              .material-symbols-rounded {
+                margin-left: 4px;
+              }
+            }
+          }
+        }
+      }
+      .card-2,
+      .card-3 {
+        .back-shadow {
+          .text {
+            .read {
+              display: flex;
+              align-items: self-start;
+              justify-content: flex-end;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .success-story-dialog {
+    width: calc(100% - 48px);
+    max-width: 720px !important;
+    .mat-dialog-container {
+      padding: 0;
+      border-radius: 40px;
+      .temp-wrap {
+        .close-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 48px;
+          height: 48px;
+          margin-left: 730px;
+          border-radius: 32px;
+          background: #FCFCFC;
+          cursor: pointer;
+          .material-symbols-rounded {
+            color: var(--primary-color);
+          }
+        }
+        .image {
+          width: 100%;
+          max-width: 720px;
+          min-height: 250px;
+          img {
+            width: inherit;
+          }
+        }
+        .text {
+          width: 100%;
+          max-width: 720px;
+          padding: 32px;
+          .title {
+            margin-bottom: 16px;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 100%;
+            letter-spacing: -0.48px;
+          }
+          .desc {
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 150%;
+            letter-spacing: -0.34px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .mission-wrap {
+    .content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .mission-cards {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        max-width: 570px;
+        max-height: 500px;
+        .card-1,
+        .card-2,
+        .card-3,
+        .card-4 {
+          max-width: calc(50% - 10px);
+          height: 288px;
+        }
+        .card-1,
+        .card-4 {
+          height: 192px;
+        }
+        .card-2 {
+          margin-top: -96px;
+        }
+        .card-1 {
+          order: 1;
+        }
+        .card-2 {
+          order: 3;
+        }
+        .card-3 {
+          order: 2;
+        }
+        .card-4 {
+          order: 4;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .mission-wrap {
+    .content {
+      width: 100%;
+      padding: 32px 0 32px 24px;
+      .text {
+        max-width: 445px;
+        margin-bottom: 16px;
+        padding-right: 24px;
+        .label {
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 150%;
+          letter-spacing: -0.28px;
+        }
+        .title {
+          margin-bottom: 8px;
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 100%;
+          letter-spacing: -0.48px;
+        }
+        .desc {
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 150%;
+          letter-spacing: -0.24px;
+        }
+      }
+
+      .mission-cards {
+        .card-1,
+        .card-2,
+        .card-3,
+        .card-4 {
+          width: -webkit-fill-available;
+          height: 224px;
+          .back-shadow {
+            width: -webkit-fill-available;
+            height: 200px;
+            max-width: -moz-available;
+            max-height: -moz-available;
+            .card-text {
+              bottom: 8px;
+              .title {
+                margin-bottom: 2px;
+                font-size: 14px;
+                font-weight: 700;
+                line-height: 130%;
+                letter-spacing: -0.28px;
+              }
+              .read {
+                width: 80px;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 150%;
+                letter-spacing: -0.24px;
+                .material-symbols-rounded {
+                  font-size: 20px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  ::ng-deep {
+    .success-story-dialog {
+      .mat-dialog-container {
+        border-radius: 24px;
+        .temp-wrap {
+          .close-btn {
+            width: 36px;
+            height: 36px;
+            margin-left: calc(100% - 84px);
+            margin-top: -45px;
+            .material-symbols-rounded {
+              font-size: 20px;
+            }
+          }
+          .image {
+            min-height: 120px;
+            img {
+              width: inherit;
+            }
+          }
+          .text {
+            padding: 16px 16px 24px 16px;
+            .title {
+              margin-bottom: 8px;
+              font-size: 14px;
+              font-weight: 700;
+              line-height: 130%;
+              letter-spacing: -0.28px;
+            }
+            .desc {
+              font-size: 12px;
+              font-weight: 400;
+              line-height: 150%;
+              letter-spacing: -0.24px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

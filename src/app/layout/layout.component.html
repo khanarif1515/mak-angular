@@ -3,6 +3,10 @@
   <app-header />
 }
 
+@if (vars.pageLayoutConfig?.showHeaderV2) {
+  <app-header-v2 />
+}
+
 <router-outlet />
 
 @if (vars.pageLayoutConfig?.showFooter) {

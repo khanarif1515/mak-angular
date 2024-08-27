@@ -18,12 +18,12 @@ export class SeoService {
   ) { }
 
   createAmpHtml(page: string, customTag: string) {
-    const url = this.vars.domain_details?.domain_url + `/amp/${page}/${encodeURIComponent(customTag)}`;
+    const url = this.vars.domain_details.name + `/amp/${page}/${encodeURIComponent(customTag)}`;
     const existingRel: any = this.vars.document.querySelector('link[rel="amphtml"]');
     if (existingRel) {
       existingRel.href = url;
     } else {
-      const link: HTMLLinkElement = this.vars.document.createElement('link');
+      const link: HTMLLinkElement = this.vars.document?.createElement('link');
       link.setAttribute('rel', 'amphtml');
       this.vars.document.head.appendChild(link);
       link.setAttribute('href', url);
@@ -40,7 +40,7 @@ export class SeoService {
   createCanonicalURL() {
     let url = this.vars.document.URL;
     if (!this.vars.isBrowser) {
-      url = this.vars.domain_details?.domain_url;
+      url = this.vars.domain_details.url;
     }
     const existingRel: any = this.vars.document.querySelector('link[rel="canonical"]');
     if (existingRel) {
@@ -53,10 +53,10 @@ export class SeoService {
     }
   }
 
-  updateCanonicalURL(url: string) {
+  updateCanonicalURL(path: string) {
     const existingRel: any = this.vars.document.querySelector('link[rel="canonical"]');
     if (existingRel) {
-      existingRel.href = this.vars.domain_details?.domain_url + url;
+      existingRel.href = this.vars.domain_details.url + path;
     }
   }
 
@@ -83,7 +83,7 @@ export class SeoService {
       campaigner: campaignerName,
       title: fundraiser?.story_title?.info_1 || fundraiser?.title || '',
       image: fundraiser?.leaderboard?.cdn_path || fundraiser?.theater?.cdn_path || '',
-      url: `${this.vars.domain_details?.domain_url}/stories/${fundraiser?.custom_tag}`,
+      url: `${this.vars.domain_details?.url}/stories/${fundraiser?.custom_tag}`,
       site: ''
     };
   }

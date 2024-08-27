@@ -8,6 +8,7 @@ export interface ILayoutConfig {
   showFooter?: boolean;
   showFooterSEO?: boolean;
   showHeader?: boolean;
+  showHeaderV2?: boolean;
   showLanguage?: boolean;
   showMenus?: boolean;
   showProfile?: boolean;
@@ -22,6 +23,7 @@ export const DefaultLayoutConfig: ILayoutConfig = {
   showFooter: false,
   showFooterSEO: false,
   showHeader: false,
+  showHeaderV2: false,
   showLanguage: false,
   showMenus: false,
   showProfile: false,
@@ -31,22 +33,22 @@ export const DefaultLayoutConfig: ILayoutConfig = {
 export const PageLayoutConfig: any = {
   'home': {
     ...DefaultLayoutConfig,
-    showFooter: true,
-    showHeader: true
+    showHeaderV2: true,
+    showFooter: true
   },
   'stories': {
     ...DefaultLayoutConfig,
-    showFooter: true,
-    showHeader: true
+    showHeader: true,
+    showFooter: true
   },
   'thank_you': {
     ...DefaultLayoutConfig,
-    showFooter: true,
-    showHeader: true
+    showHeader: true,
+    showFooter: true
   },
   'page_not_found': {
     ...DefaultLayoutConfig,
-    showFooter: true,
     showHeader: true,
+    showFooter: true
   }
 };

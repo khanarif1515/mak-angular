@@ -1,15 +1,64 @@
-<p>home works!</p>
-
-<!-- @if (campaings.length) {
 <div class="wrap">
   <div class="content">
-    <div class="campaigns">
-      @for (item of campaings; track $index) {
-      <div class="campaign">
-        <button routerLink="/stories/{{item?.custom_tag}}">{{item?.custom_tag}}</button>
-      </div>
-      }
+    <div class="banner">
+      <app-banner [data]="data" />
     </div>
+
+    <!-- <div class="fundraiser-list">
+      <app-fundraiser-slide
+        [fundraisers]="fundraisers"
+        [title]="data?.fundraisers?.title"
+        [desc]="data?.fundraisers?.subtitle"
+        [showProtect]="true"
+        [eventInfo]="{info_1: 'Top_fold'}"
+      />
+    </div> -->
+
+    <div class="tax-banner">
+      <app-tax-benefit-banner [data]="data" />
+    </div>
+
+    <div class="our-mission">
+      <app-our-mission [data]="data" />
+    </div>
+
+    <!-- <div class="fundraiser-list">
+      <app-fundraiser-slide
+        [fundraisers]="fundraisers"
+        [title]="'Contribute with ' + vars.domain_details.name"
+        [desc]="'Here are some fundraisers that need your attention'"
+        [eventInfo]="{info_1: 'mid_fold'}"
+      />
+    </div> -->
+
+    <div class="why-us">
+      <app-why-us [data]="data" />
+    </div>
+
+    <div class="how-it-works">
+      <app-how-it-works [data]="data" />
+    </div>
+
+    <div class="faq">
+      <app-faq />
+    </div>
+
   </div>
 </div>
-} -->
+<br>
+<br>
+<div>domain_name = {{vars.domain_details.name}}</div>
+<div>domain_url = {{vars.domain_details.url}}</div>
+<div>full_url = {{vars.domain_details.fullUrl}}</div>
+<div>light bg = {{vars.domain_details.logoLightBg}}</div>
+<div>dark bg = {{vars.domain_details.logoDarkBg}}</div>
+<div>favicon = {{vars.domain_details.favicon}}</div>
+<br>
+<br>
+<p mat-ripple>home works!</p> <button routerLink="/stories/supportzainab" mat-button>go to stories/supportzainab</button><button routerLink="/stories/supportricha">go to stories/supportricha</button>
+<br>
+<br>
+<button mat-button>Button</button>
+<br>
+<br>
+<button mat-ripple>Ripple</button>

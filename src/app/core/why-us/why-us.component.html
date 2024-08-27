@@ -1,0 +1,14 @@
+<div class="why-wrap">
+  <div class="content">
+    <div class="heading"><h2>Why {{vars.domain_details.name}}?</h2></div>
+    @for (item of data?.why || []; track $index) {
+      <div class="section">
+        <div class="image"><img ngSrc="{{item?.image}}" width="373" height="240" alt="story" /></div>
+        <div class="text">
+          <div class="title"><h3>{{item?.title}}</h3></div>
+          <div class="desc" [innerHTML]="item?.desc | DomainNamePipe"></div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,5 +1,8 @@
 export interface IHost {
-  domain_name: string;
-  full_url: string;
-  domain_url: string;
+  name?: string;
+  url?: string;
+  fullUrl?: string;
+  favicon?: string;
+  logoLightBg?: string;
+  logoDarkBg?: string;
 }

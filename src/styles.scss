@@ -1,30 +1,15 @@
-
-:root {
-  --primary-font-family: 'DM Sans', sans-serif;
-  --font-source-sans-pro: 'Source Sans Pro', sans-serif;
-  --font-source-serif-pro: 'Source Serif 4', sans-serif;
-  --rboto-font-family: 'Roboto', sans-serif;
-  --primary-color: #2A7AAC;
-  --primary-color-rgb: 42, 122, 172;
-  --primary-hover-color: #2A7AAC;
-  --primary-color-shadow-05: rgb(42, 122, 172, 0.05);
-  --primary-color-shadow-1: rgb(42, 122, 172, 0.1);
-  --primary-color-shadow-2: rgb(42, 122, 172, 0.2);
-  --primary-color-shadow-3: rgb(42, 122, 172, 0.3);
-  --primary-color-shadow-4: rgb(42, 122, 172, 0.4);
-  --primary-color-shadow-5: rgb(42, 122, 172, 0.5);
-  --primary-color-shadow-6: rgb(42, 122, 172, 0.6);
-  --primary-color-shadow-7: rgb(42, 122, 172, 0.7);
-  --primary-color-shadow-8: rgb(42, 122, 172, 0.8);
-  --primary-color-shadow-9: rgb(42, 122, 172, 0.9);
-  --error-color: #ea4335;
-}
-
-html, body { height: 100%; }
+@import "src/assets/styles/_variables.scss";
+@import "src/assets/styles/_mat-theme.scss";
+@import "src/assets/styles/_glide.scss";
 
 body {
-  font-family: var(--primary-font-family);
   margin: 0;
+  font-family: var(--primary-font-family);
+}
+
+img {
+  width: 100%;
+  height: 100%;
 }
 
 .hide-scrollbar {

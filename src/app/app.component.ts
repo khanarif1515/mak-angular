@@ -1,13 +1,13 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, RouteConfigLoadEnd, RouteConfigLoadStart, Router, RouterOutlet } from '@angular/router';
 import { filter, map, mergeMap, pairwise } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { API_URLS } from 'src/environments/api-urls';
 import { ApiService, EventsService, ScriptLoaderService, SeoService, UtilService, VariablesService } from './shared/services';
+import { IUser } from './shared/model/user.model';
+import { ICLientData } from './shared/model/client.model';
 import { DefaultIPLocation } from './shared/model/default-ip';
 import { DefaultLayoutConfig, PageLayoutConfig } from './shared/model/layout-config.model';
-import { ICLientData } from './shared/model/client.model';
-import { IUser } from './shared/model/user.model';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +18,6 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent implements OnInit {
   title = 'MAK';
-
   qParams: any;
   loadingRouteConfig = true;
 
@@ -34,19 +33,16 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('env=', environment.DOMAIN_URL);
-    console.log('var=', this.vars.domain_details);
     this.qParams = { ...this.actRoute.snapshot.queryParams };
-    this.setSeo();
     // this.getDomain();
     this.routeChangeListner();
     this.setSomeCookies();
     const webPageSchema = {
       '@context': 'http://schema.org',
-      '@id': `${this.vars.domain_details?.domain_url}`,
+      '@id': `${this.vars.domain_details?.url}`,
       '@type': 'WebPage',
-      'url': `${this.vars.domain_details?.domain_url}`,
-      'name': `${this.vars.domain_details?.domain_name}`
+      'url': `${this.vars.domain_details?.url}`,
+      'name': `${this.vars.domain_details?.name}`
     };
     this.seo.schemaOrgObject(webPageSchema);
     if (this.vars.isBrowser) {
@@ -79,15 +75,6 @@ export class AppComponent implements OnInit {
         }
       });
     }
-  }
-
-  setSeo(data?: { domainName?: string, logo?: { light?: string, dark?: string }, favicon?: string }) {
-    this.util.setPageTitle(this.vars.domainName);
-    if (data?.domainName) {
-      this.vars.domainName = data?.domainName;
-    }
-    this.util.setLogo(data?.logo);
-    this.util.setFavicon(data?.favicon || '');
   }
 
   routeChangeListner() {
@@ -165,7 +152,7 @@ export class AppComponent implements OnInit {
   }
 
   setDeviceType() {
-    this.vars.deviceType = this.util.isMobile() ? 'mobile' : 'desktop';
+    this.vars.deviceType = this.vars.isMobile ? 'mobile' : 'desktop';
     const platform = this.util.storage.getCookie('platform');
     if (platform) {
       this.vars.deviceType = platform;
@@ -226,7 +213,7 @@ export class AppComponent implements OnInit {
       if (user && !this.vars.isVariableLogin) {
         this.util.setLogginStatus(user.isLoggedIn);
         this.vars.userData$.next(this.util.getUserData());
-        const domain = environment.name === 'local' ? 'localhost' : '.' + this.vars.domain_details?.domain_name;
+        const domain = environment.name === 'local' ? 'localhost' : '.' + this.vars.domain_details?.url;
         this.util.storage.setCookie('is_logged_in', 'true', 365, domain);
       }
     } catch (error) {
@@ -257,4 +244,14 @@ export class AppComponent implements OnInit {
       }
     });
   }
+
+  setSeo(data?: { domainName?: string, logo?: { light?: string, dark?: string }, favicon?: string }) {
+    if (data?.domainName) {
+      this.vars.domain_details.name = data?.domainName || '';
+    }
+    this.util.setPageTitle(this.vars.domain_details?.name || '');
+    this.util.setLogo(data?.logo);
+    this.util.setFavicon(data?.favicon || '');
+  }
+
 }
