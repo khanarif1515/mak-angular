@@ -27,12 +27,6 @@ export class ApiService {
     this.httpClientBackend = new HttpClient(handler);
   }
 
-  public httpOptions: object = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    })
-  };
-
   get(path: string, qParams?: any, headers?: IHeaders) {
     const { url, options } = this.handleReq(path, headers);
     return this.http.get(url, { ...options, params: qParams });
@@ -91,7 +85,7 @@ export class ApiService {
 
   getShortURL(payload: any): Promise<string> {
     return new Promise((resolve, reject) => {
-      this.http.post<{ data: { data: { short_url: string } } }>((this.vars.domain_details?.apiUrl || environment.API_BASE_URL) + API_URLS.GET_SHORT_URL, payload, this.httpOptions).subscribe({
+      this.http.post<{ data: { data: { short_url: string } } }>((this.vars.domain_details?.apiUrl || environment.API_BASE_URL) + API_URLS.GET_SHORT_URL, payload, this.setReqOptions()).subscribe({
         next: (res: any) => {
           resolve(res.data.data.short_url);
         }, error: (error) => {
@@ -107,7 +101,7 @@ export class ApiService {
       if (ip) {
         this.setClientIP(ip);
       } else {
-        this.httpClientBackend.get('https://devapis.ketto.org/api/third_party/iplocation').subscribe({
+        this.httpClientBackend.get('https://devapis.ketto.org/api/third_party/iplocation', this.setReqOptions({ 'Content-Type': 'application/x-www-form-urlencoded' })).subscribe({
           next: (res: any) => {
             this.setClientIP(res?.data);
           },
