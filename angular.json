@@ -64,7 +64,7 @@
               ],
               "outputHashing": "all",
               "optimization": true,
-              "sourceMap": false
+              "sourceMap": true
             },
             "development": {
               "fileReplacements": [
