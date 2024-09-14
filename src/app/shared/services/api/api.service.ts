@@ -23,7 +23,9 @@ export class ApiService {
     private http: HttpClient,
     private util: UtilService,
     private vars: VariablesService
-  ) { }
+  ) {
+    this.httpClientBackend = new HttpClient(handler);
+  }
 
   public httpOptions: object = {
     headers: new HttpHeaders({
