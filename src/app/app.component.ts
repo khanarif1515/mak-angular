@@ -187,7 +187,7 @@ export class AppComponent implements OnInit {
       'IN': 56509,
       'AE': 69550
     };
-    this.vars.clientLocationData.next(ip);
+    this.vars.clientLocationData$.next(ip);
     const criteoId = criteoPartnerIDs[ip.country_name] || 66025;
     this.events.gtmPush({ 'CriteoPartnerID': criteoId });
     this.util.storage.checkFromSession('iplocation', ip);
