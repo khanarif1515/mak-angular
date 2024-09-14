@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CurrencyComponent } from 'src/app/core/currency/currency.component';
 import { InrFormatPipe } from 'src/app/shared/pipes/inr-format/inr-format.pipe';
 import { TypeofPipe } from 'src/app/shared/pipes/typeof/typeof.pipe';
-import { ApiService } from 'src/app/shared/services';
+import { ApiService, UtilService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-honda',
@@ -31,10 +31,12 @@ export class HondaComponent {
 
   constructor(
     private actRoute: ActivatedRoute,
-    private api: ApiService
+    private api: ApiService,
+    private util: UtilService
   ) { }
 
   ngOnInit() {
+    this.util.setPageTitle('Honda Amaze - MH-12-PQ-4787');
     this.customTag = this.actRoute.snapshot.params?.['tag'];
     this.getDetails();
   }
