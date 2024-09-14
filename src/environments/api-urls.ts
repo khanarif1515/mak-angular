@@ -1,8 +1,38 @@
 export const API_URLS = {
   GET_DOMAIN: 'getdomain',
   GET_FUNDRAISER(tag: String) { return `fundraisers/${tag}`; },
+  GET_FUNDRAISER_RAISED(tag: String) { return `fundraisers/${tag}/raised`; },
   GET_HEADER(domainName: string) { return `domain/${domainName}`; },
   GET_IP: 'third_party/iplocation',
   GET_CAMPAIGNS: 'campaigns',
+  GET_USER_ME: 'users/me',
+  GET_CONTRIBUTE_OTD(campaignId?: number) { return `fundraisers/${campaignId}/contribute`; },
+  CREATE_CART(campaignId?: number) { return `fundraisers/${campaignId}/cart`; },
+  GET_PAYMENT_OPTIONS: 'payment/options',
+  CREATE_ORDER(campaignId?: number) { return `fundraisers/${campaignId}/order`; },
+  SEND_ORDER: 'payment/send',
+  GET_PAYMENT_STATUS(orderId?: string) { return `payment/response/${orderId}`; },
+  ADD_CRITICAL_ILLNESS(entityId?: number) { return `entity/${entityId}/infos`; },
+  GET_FUNDRAISER_COMMENTS(customTag?: string) { return `fundraisers/${customTag}/comments`; },
+  GET_SHORT_URL: 'generate/short-url',
+  AUTO_LOGIN: 'auth/autologin',
+  GET_ORDER_DETIALS(campaignId: number, orderId: string) { return `fundraisers/${campaignId}/donors/${orderId}`; },
+  // Donors for Tickr
+  GET_TICKR_DATA(data: any) {
+    return `fundraisers/${data.campaignId}/donors?with=donoravtar&currency=${data.currency}&orderBy=id&sortedBy=Desc&conversion=1&limit=${data.limit}&country_code=${data.country_code || ''}`;
+  },
+  GET_USER_ORDERS: 'users/me/orders',
+  AMOUNT_REDEEM: 'mbm/redeem',
+  GET_USER_SUMMARY: 'users/me/orders/summary',
+  GET_RECURRING_CONTRIBUTE_DETAILS: 'subscribe/contribute',
+  PORTFOLIO_TICKR: 'show/tickr',
+  SUCCESS_STORIES: 'fundraisers/success-story',
+  GET_USER_SUBSCRIPTION(entityId: any) { return `users/${entityId}/subscriptions/thankyou`; },
+  INCREASE_PLEDGE(id: any) { return `subscriptions/${id}`; },
+  UPDATE_PROFILE(entityId: string) { return `users/${entityId}/media/individual/profile` },
+  CONTACT_CAMPAINGER: (campId: string) => `campaigns/${campId}/messages`,
+  SAVE_PROFILE: (entityId: string) => `users/${entityId}/info`,
+  GET_MY_DONATIONS: (entityId: string) => `entity/${entityId}/donations?page=`,
+  GET_TOP_DONORS: (customTag: any) => `fundraisers/${customTag}/donors`,
 };
 

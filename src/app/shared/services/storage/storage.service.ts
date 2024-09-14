@@ -16,7 +16,7 @@ export class StorageService {
         localStorage.setItem(name, JSON.stringify(data));
         return true;
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     }
     return null;
@@ -39,7 +39,7 @@ export class StorageService {
           return data;
         }
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     }
     return null;
@@ -51,7 +51,7 @@ export class StorageService {
         localStorage.removeItem(name);
         return true;
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     }
     return null;
@@ -65,7 +65,7 @@ export class StorageService {
           return data[child] || null;
         }
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     }
     return null;
@@ -79,7 +79,7 @@ export class StorageService {
           return data;
         }
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     }
     return null;
@@ -91,7 +91,7 @@ export class StorageService {
         sessionStorage.removeItem(name);
         return true;
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     }
     return null;
@@ -112,7 +112,7 @@ export class StorageService {
         sessionStorage.setItem(name, JSON.stringify(data));
         return true;
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     }
     return null;
@@ -126,7 +126,7 @@ export class StorageService {
           return data[child] || false;
         }
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     }
     return null;

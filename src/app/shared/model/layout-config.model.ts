@@ -1,4 +1,17 @@
-export const IPageNames: 'home' | 'honda' | 'page_not_found' | 'stories' | 'thank_you' | '' = '';
+
+export type IPageNames = 'home' | 'stories' | 'thank_you' | 'page_not_found' | 'profile' | 'donations' | 'payment_redirect_page' | '';
+export type IPageOrigins = 'h' | 's' | 'ty' | '404' | 'pf' | 'dn' | 'prp' | '';
+
+export const PAGE_ORIGIN_MAP: Record<IPageOrigins, IPageNames> = {
+  h: 'home',
+  s: 'stories',
+  ty: 'thank_you',
+  '404': 'page_not_found',
+  pf: 'profile',
+  dn: 'donations',
+  prp: 'payment_redirect_page',
+  '': ''
+};
 
 export interface ILayoutConfig {
   headerTopSticky?: boolean;
@@ -13,42 +26,63 @@ export interface ILayoutConfig {
   showMenus?: boolean;
   showProfile?: boolean;
   showSearch?: boolean;
+  showSecure?: boolean;
+  showMiniFooter?: boolean;
 }
 
 export const DefaultLayoutConfig: ILayoutConfig = {
   headerTopSticky: false,
-  logoNavigate: false,
+  logoNavigate: true,
   showCurrency: false,
   showDownloadApp: false,
-  showFooter: false,
+  showFooter: true,
   showFooterSEO: false,
-  showHeader: false,
+  showHeader: true,
   showHeaderV2: false,
   showLanguage: false,
   showMenus: false,
-  showProfile: false,
+  showProfile: true,
   showSearch: false,
+  showSecure: false,
+  showMiniFooter: false
 };
 
 export const PageLayoutConfig: any = {
   'home': {
     ...DefaultLayoutConfig,
-    showHeaderV2: true,
-    showFooter: true
+    showHeader: false,
+    showHeaderV2: true
   },
   'stories': {
     ...DefaultLayoutConfig,
-    showHeader: true,
-    showFooter: true
+    showCurrency: true,
+    showSecure: true,
+    showFooter: false,
+    showMiniFooter: true
   },
   'thank_you': {
-    ...DefaultLayoutConfig,
-    showHeader: true,
-    showFooter: true
+    ...DefaultLayoutConfig
   },
   'page_not_found': {
+    ...DefaultLayoutConfig
+  },
+  'profile': {
+    ...DefaultLayoutConfig
+  },
+  'aboutus': {
     ...DefaultLayoutConfig,
-    showHeader: true,
-    showFooter: true
+    showSecure: true
+  },
+  'guarantee': {
+    ...DefaultLayoutConfig,
+    showSecure: true
+  },
+  'donations': {
+    ...DefaultLayoutConfig
+  },
+  'payment_redirect_page': {
+    ...DefaultLayoutConfig,
+    showHeader: false,
+    showFooter: false
   }
 };

@@ -1,6 +1,8 @@
 export interface IFundraiser {
   action_at?: string;
   action_date?: string;
+  isEnded?: boolean;
+  isSuccessfullyFunded?: boolean;
   activeteam?: [{
     designation?: string;
     entity_id?: number;
@@ -36,6 +38,22 @@ export interface IFundraiser {
     info_type?: string;
   };
   basicinfo?: any[];
+  basicInfo?: {
+    about?: string;
+    beneficiary_name?: string;
+    beneficiary_relation?: {
+      info_1: string;
+      info_2: string;
+    };
+    contribute?: string;
+    disease?: string;
+    doctor_name?: string;
+    hospital?: string;
+    is_private?: string | number;
+    manager?: string | number;
+    social?: string;
+    video_leaderboard?: string | number;
+  } | any;
   beneficiary?: {
     access_url?: string;
     address_1?: string;
@@ -192,6 +210,10 @@ export interface IFundraiser {
     last24hrtotal?: number;
     lastweektotal?: number;
     raised?: number;
+    initRaised?: number;
+    raisedPerc?: number;
+    increaseRaiseBy?: number;
+    increaseRaiseByPerc?: number;
     usdraised?: number;
   };
   rewards?: IReward[];
@@ -226,7 +248,7 @@ export interface IFundraiser {
     type?: string;
     type_id?: number;
   }];
-  thankyouvideo?: {path?: string;};
+  thankyouvideo?: { path?: string; };
   theater?: {
     cdn_path?: string;
   };

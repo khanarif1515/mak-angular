@@ -1,7 +1,9 @@
 export { ABService } from './AB/ab.service';
 export { ApiService } from './api/api.service';
 export { AuthService } from './auth/auth.service';
+export { DateService } from './date/date.service';
 export { EventsService } from './events/events.service';
+export { PaymentService } from './payment/payment.service';
 export { ScriptLoaderService } from './script-loader/script-loader.service';
 export { SeoService } from './seo/seo.service';
 export { StorageService } from './storage/storage.service';

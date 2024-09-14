@@ -19,42 +19,42 @@ export class SeoService {
 
   createAmpHtml(page: string, customTag: string) {
     const url = this.vars.domain_details.name + `/amp/${page}/${encodeURIComponent(customTag)}`;
-    const existingRel: any = this.vars.document.querySelector('link[rel="amphtml"]');
+    const existingRel: any = this.util.document.querySelector('link[rel="amphtml"]');
     if (existingRel) {
       existingRel.href = url;
     } else {
-      const link: HTMLLinkElement = this.vars.document?.createElement('link');
+      const link: HTMLLinkElement = this.util.document?.createElement('link');
       link.setAttribute('rel', 'amphtml');
-      this.vars.document.head.appendChild(link);
+      this.util.document.head.appendChild(link);
       link.setAttribute('href', url);
     }
   }
 
   removeAmpHtml() {
-    const existingAmpHtml = this.vars.document.querySelector('link[rel="amphtml"]');
+    const existingAmpHtml = this.util.document.querySelector('link[rel="amphtml"]');
     if (existingAmpHtml) {
       existingAmpHtml.remove();
     }
   }
 
   createCanonicalURL() {
-    let url = this.vars.document.URL;
+    let url = this.util.document.URL;
     if (!this.vars.isBrowser) {
       url = this.vars.domain_details.url;
     }
-    const existingRel: any = this.vars.document.querySelector('link[rel="canonical"]');
+    const existingRel: any = this.util.document.querySelector('link[rel="canonical"]');
     if (existingRel) {
       existingRel.href = url;
     } else {
-      const link: HTMLLinkElement = this.vars.document.createElement('link');
+      const link: HTMLLinkElement = this.util.document.createElement('link');
       link.setAttribute('rel', 'canonical');
-      this.vars.document.head.appendChild(link);
+      this.util.document.head.appendChild(link);
       link.setAttribute('href', url);
     }
   }
 
   updateCanonicalURL(path: string) {
-    const existingRel: any = this.vars.document.querySelector('link[rel="canonical"]');
+    const existingRel: any = this.util.document.querySelector('link[rel="canonical"]');
     if (existingRel) {
       existingRel.href = this.vars.domain_details.url + path;
     }
@@ -62,23 +62,23 @@ export class SeoService {
 
   schemaOrgObject(seoJson: any, id?: any) {
     if (!seoJson) { return; }
-    const s = this.vars.document.createElement('script');
+    const s = this.util.document.createElement('script');
     s.type = 'application/ld+json';
     s.innerHTML = JSON.stringify(seoJson);
     if (id) { s.id = id; }
-    const head = this.vars.document.getElementsByTagName('head')[0];
+    const head = this.util.document.getElementsByTagName('head')[0];
     head.appendChild(s);
   }
 
   stroyPageMetaTags(fundraiser?: IFundraiser) {
-    const storyDesc = this.vars.document.createElement('div');
+    const storyDesc = this.util.document.createElement('div');
     const htmlString = fundraiser?.story_description?.info_1 || '';
     storyDesc.innerHTML = htmlString.replace(/<img[^>]*>/g, '');
     let content: string = storyDesc.textContent.replace(/(\r\n|\n|\r)/gm, '');
     content = content.length > 155 ? content.substring(0, 155).concat('...') : content;
     const campaignerName = fundraiser?.campaigner?.full_name || '';
     return {
-      description: `${this.util.capitalizeFirstLatter(campaignerName)}, ${content}`,
+      description: `${this.util.capitalizeFirstLetter(campaignerName)}, ${content}`,
       keywords: 'story',
       campaigner: campaignerName,
       title: fundraiser?.story_title?.info_1 || fundraiser?.title || '',

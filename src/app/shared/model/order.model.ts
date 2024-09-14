@@ -1,10 +1,13 @@
 import { IFundraiser } from "./fundraiser.model";
+import { ICart } from "./payment.model";
 
 export interface IOrder {
   auto_pay_m1?: any;
   bulkdonation?: any[];
   campaign?: IFundraiser;
+  campaignUrl?: string;
   campaign_id?: number;
+  cart?: ICart;
   cause_id?: number;
   checksum?: string;
   coupon?: any;
@@ -20,8 +23,10 @@ export interface IOrder {
   donor_display_name?: string;
   donor_email?: string;
   donor_entity_details_id?: number;
+  donor_extension?: string;
   donor_first_name?: string;
   donor_phone?: string;
+  donor_last_name?: string;
   donor_pincode?: string;
   donor_state?: null;
   donoravtar?: any;
@@ -35,9 +40,11 @@ export interface IOrder {
   payment_gateway?: string;
   payment_mode?: string;
   payment_mode_value?: string;
+  payout_status?: number;
   private_key?: string;
   recurring?: any;
   rewards_id?: number;
+  sub_campaign?: any;
   sub_campaign_id?: number;
   subscription_id?: any;
   tip_amount?: number;
@@ -45,6 +52,8 @@ export interface IOrder {
   tip_amount_local?: number;
   transaction_return_status?: string;
   visited_thankyou?: boolean;
+  is_multi_patient_campaign?: boolean;
+  creation_date?: any;
 }
 
 export interface IDonor {

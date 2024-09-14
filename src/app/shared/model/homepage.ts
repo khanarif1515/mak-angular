@@ -2,9 +2,9 @@ export const homepageContent = (name: string) => {
   const data: any = {
     default: {
       banner: {
-        title: 'Empower Change through Crowdfunding',
-        subtitle: '<h2> Bridging gaps in healthcare with crowdfunding.<br> Contribute to be their lifeline.</h2>',
-        btnLabel: 'Contribute Now'
+        title: 'Our mission is to empower 1 billion lives through our essential emergency response',
+        subtitle: '',
+        btnLabel: 'Join us now'
       },
       fundraisers: {
         title: `Make a Difference with ${name}`,
@@ -12,21 +12,21 @@ export const homepageContent = (name: string) => {
       },
       taxBenefitCard: {
         title: 'Contribute and Gain Tax Benefits',
-        subtitle: `Every contribution at ${name} comes with tax advantages. Download your 80G Tax Certificate and save on your taxes.`,
+        subtitle: `Every contribution at ${name} comes with tax advantages. Download your 80G/IRS Tax Certificate and save on your taxes.`,
       },
       missionCard: {
-        title: 'Driving change with the power of crowdfunding',
-        subtitle: 'Create a positive change by extending financial support to families in need of urgent medical care, powered by crowdfunding and generosity.',
+        title: 'Building a more just and equitable world',
+        subtitle: `${name} (Empowering Quest, Unity, and Life for All) connects people with a passion for helping to nonprofits dedicated to empowering the most vulnerable communities globally`,
       },
       why: [
         {
-          title: 'Lives Saved, Smiles Earned',
-          desc: 'Witness the life-changing impact of 2.9L supporters, transforming lives and spreading positivity through the power of crowdfunding',
+          title: 'Support global causes with confidence',
+          desc: `Every donation you make is backed by our ${name} Guarantee. This means we're committed to ensuring your funds are used effectively and transparently. Our rigorous vetting process, combined with our state-of-the-art security technology, guarantees that only the most reputable and trustworthy organizations receive your support.`,
           image: '/assets/images/why/why-1.png'
         },
         {
           title: 'We Check Everything',
-          desc: `Partnered with 300+ hospitals, ${name} is your reliable choice. We carefully vet every campaign, securing your contributions for the intended beneficiaries.`,
+          desc: `${name} is your reliable choice. We carefully vet every campaign, securing your contributions for the intended beneficiaries.`,
           image: '/assets/images/why/why-2.png'
         },
         {
@@ -71,7 +71,7 @@ export const homepageContent = (name: string) => {
       },
       taxBenefitCard: {
         title: 'Understanding Zakat',
-        subtitle: 'Zakat (meaning ‘purification’ in Arabic) is an obligatory tax on every Muslim designed to help the poor and empower communities. This type of charity is believed to purify your wealth and increase blessings in your life.',
+        subtitle: `Zakat (meaning 'purification' in Arabic) is an obligatory tax on every Muslim designed to help the poor and empower communities. This type of charity is believed to purify your wealth and increase blessings in your life.`,
       },
       missionCard: {
         title: 'Driving change with the power of crowdfunding',
@@ -85,7 +85,7 @@ export const homepageContent = (name: string) => {
         },
         {
           title: 'We Check Everything',
-          desc: 'Your peace of mind is our priority. That’s why we work with 300+ hospitals, to vet fundraisers and ensure your support reaches the right person',
+          desc: `Your peace of mind is our priority. That's why we work with 300+ hospitals, to vet fundraisers and ensure your support reaches the right person`,
           image: '/assets/images/why/why-2.png'
         },
         {

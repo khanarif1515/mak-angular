@@ -7,6 +7,7 @@ export interface IUser {
   address_2?: string;
   address_3?: string;
   age?: string;
+  profile_complate?: string;
   aggdonationall?: {
     avg_donation?: number;
     campaigns?: number;
@@ -78,13 +79,7 @@ export interface IUser {
     updation_date?: string;
     upi_id?: string;
   };
-  listsubscriptions?: {
-    animals?: any;
-    education?: any;
-    insurance?: any;
-    medical?: any;
-    memorial?: any;
-  };
+  listsubscriptions?: any;
   lname?: string;
   no_80g?: string;
   pan_number?: any;

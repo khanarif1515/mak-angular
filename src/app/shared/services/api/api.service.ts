@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { VariablesService } from '../variables/variables.service';
+import { API_URLS } from 'src/environments/api-urls';
 
 interface IHeaders { [key: string]: string }
 
@@ -15,38 +16,76 @@ export class ApiService {
     private vars: VariablesService
   ) { }
 
-  get(path: string, headers?: IHeaders) {
-    if (this.vars.utm_url_string) {
-      path = path + `${path.includes('?') ? '&' : '?'}${this.vars.utm_url_string}`;
-    }
-    const url = environment.API_BASE_URL + path;
-    return this.http.get(url, this.setReqOptions(headers));
+  public httpOptions: object = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+  };
+
+  get(path: string, qParams?: any, headers?: IHeaders) {
+    const { url, options } = this.handleReq(path, headers);
+    return this.http.get(url, { ...options, params: qParams });
   }
 
   post(path: string, data?: any, headers?: IHeaders) {
-    data = { ...data, ...this.vars.utm_url_obj };
-    const url = environment.API_BASE_URL + path;
-    return this.http.post(url, JSON.stringify(data || {}), this.setReqOptions(headers));
+    const { url, options, body } = this.handleReq(path, headers, data);
+    return this.http.post(url, JSON.stringify(body || {}), options);
   }
 
   put(path: string, data?: any, headers?: IHeaders) {
-    data = { ...data, ...this.vars.utm_url_obj };
-    const url = environment.API_BASE_URL + path;
-    return this.http.put(url, JSON.stringify(data || {}), this.setReqOptions(headers));
+    const { url, options, body } = this.handleReq(path, headers, data);
+    return this.http.put(url, JSON.stringify(body || {}), options);
   }
 
   delete(path: string, headers?: IHeaders) {
-    if (this.vars.utm_url_string) {
-      path = path + `${path.includes('?') ? '&' : '?'}${this.vars.utm_url_string}`;
-    }
-    const url = environment.API_BASE_URL + path;
-    return this.http.delete(url, this.setReqOptions(headers));
+    const { url, options } = this.handleReq(path, headers);
+    return this.http.delete(url, options);
   }
 
   setReqOptions(headers: IHeaders = { 'Content-Type': 'application/json' }) {
+    if (this.vars.authToken) {
+      headers = {
+        ...headers,
+        Authorization: `Bearer ${this.vars.authToken}`
+      }
+    }
     return {
       headers: new HttpHeaders(headers)
     };
   }
 
+  handleReq(path: string, headers?: IHeaders, data?: any): { url: string, body?: any, options?: any } {
+    const options = this.setReqOptions(headers);
+    let body = data;
+    if (body && this.vars.utm_url_obj) {
+      body = { ...body, ...this.vars.utm_url_obj };
+    } else if (this.vars.utm_url_string) {
+      path += `${path.includes('?') ? '&' : '?'}${this.vars.utm_url_string}`;
+    }
+    const url = `${!path.startsWith('http') ? (this.vars.domain_details?.apiUrl || environment.API_BASE_URL) : ''}${path}`;
+    return { url, body, options };
+  }
+
+  fileUpload(path: string, data?: any, headers?: IHeaders) {
+    const { url } = this.handleReq(path, headers);
+    const fd = new FormData();
+    fd.append('file', data);
+    const options = {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${this.vars.authToken}`
+      }),
+    };
+    return this.http.post(url, fd, options);
+  }
+
+  getShortURL(payload: any): Promise<string> {
+    return new Promise((resolve, reject) => {
+        this.http.post<{ data: { data: { short_url: string } } }>((this.vars.domain_details?.apiUrl || environment.API_BASE_URL) + API_URLS.GET_SHORT_URL, payload, this.httpOptions).
+          subscribe({next: (res: any) => {
+            resolve(res.data.data.short_url);
+          }, error: (error) => {
+            reject(false);
+          }});
+    });
+  }
 }
