@@ -63,7 +63,8 @@
                 }
               ],
               "outputHashing": "all",
-              "sourceMap": true
+              "sourceMap": true,
+              "prerender": false
             },
             "development": {
               "fileReplacements": [
@@ -74,7 +75,8 @@
               ],
               "optimization": true,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "prerender": false
             },
             "local": {
               "fileReplacements": [
