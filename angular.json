@@ -63,8 +63,8 @@
                 }
               ],
               "outputHashing": "all",
-              "optimization": true,
-              "sourceMap": true
+              "sourceMap": true,
+              "prerender": false
             },
             "development": {
               "fileReplacements": [
@@ -75,7 +75,8 @@
               ],
               "optimization": true,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "prerender": false
             },
             "local": {
               "fileReplacements": [
@@ -86,7 +87,8 @@
               ],
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "prerender": false
             }
           },
           "defaultConfiguration": "production"
@@ -131,6 +133,11 @@
           }
         }
       }
+    }
+  },
+  "cli": {
+    "cache": {
+      "enabled": false
     }
   }
 }
