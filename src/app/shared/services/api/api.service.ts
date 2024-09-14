@@ -102,7 +102,7 @@ export class ApiService {
       if (ip) {
         this.setClientIP(ip);
       } else {
-        this.get(API_URLS.GET_IP).subscribe({
+        this.get('https://devapis.ketto.org/api/third_party/iplocation').subscribe({
           next: (res: any) => {
             this.setClientIP(res?.data);
           },
