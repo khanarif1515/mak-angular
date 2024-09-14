@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { VariablesService } from '../variables/variables.service';
@@ -15,8 +15,11 @@ interface IHeaders { [key: string]: string }
 })
 export class ApiService {
 
+  httpClientBackend: HttpClient | any;
+
   constructor(
     private actRoute: ActivatedRoute,
+    private handler: HttpBackend,
     private http: HttpClient,
     private util: UtilService,
     private vars: VariablesService
@@ -102,7 +105,7 @@ export class ApiService {
       if (ip) {
         this.setClientIP(ip);
       } else {
-        this.get('https://devapis.ketto.org/api/third_party/iplocation').subscribe({
+        this.httpClientBackend.get('https://devapis.ketto.org/api/third_party/iplocation').subscribe({
           next: (res: any) => {
             this.setClientIP(res?.data);
           },
