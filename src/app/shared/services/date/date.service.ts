@@ -75,6 +75,6 @@ export class DateService {
       'ss': ('0' + date.getSeconds()).slice(-2),
     };
 
-    return format.replace(/MM|dd|yyyy|HH|mm|ss/g, matched => map[matched].toString());
+    return format.replace(/MM|dd|yyyy|HH|mm|ss/g, matched => map[matched]?.toString());
   }
 }

@@ -38,7 +38,7 @@ export class EventsService {
       const user: IUser = this.util.getUserData();
       data = this.util.removeEmptyFromObject({
         ...data,
-        'x-fb-event_id': +(`${Date.now().toString()}${Math.floor(Math.random() * 10000000).toString()}`),
+        'x-fb-event_id': +(`${Date.now().toString()}${Math.floor(Math.random() * 10000000)?.toString()}`),
         'user_data': user ? { email_address: user.email, phone_number: user.phone_1 } : null
       });
 

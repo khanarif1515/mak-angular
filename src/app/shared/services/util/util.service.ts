@@ -52,9 +52,9 @@ export class UtilService {
 
   getUTMOnly(returnType?: 'url_string' | ''): any {
     const parmas = this.getUTMs();
-    const utmParams = Object.keys(parmas).filter(key => key.toString().toLocaleLowerCase().match('utm')).reduce((cur, key) => Object.assign(cur, { [key]: parmas[key] }), {});
+    const utmParams = Object.keys(parmas).filter(key => key?.toString().toLocaleLowerCase().match('utm')).reduce((cur, key) => Object.assign(cur, { [key]: parmas[key] }), {});
     if (returnType === 'url_string') {
-      return Object.keys(utmParams).length ? new URLSearchParams(utmParams).toString() : '';
+      return Object.keys(utmParams).length ? new URLSearchParams(utmParams)?.toString() : '';
     } else {
       return utmParams;
     }

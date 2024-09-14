@@ -19,7 +19,7 @@ export class InrFormatPipe implements PipeTransform {
     }
 
     if (isNaN(number)) {
-      return value.toString();  // Return original value if it's not a number
+      return value?.toString();  // Return original value if it's not a number
     }
 
     // Format the number according to the locale and attach the currency symbol (if provided)
