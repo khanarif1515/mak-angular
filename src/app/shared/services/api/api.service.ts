@@ -1,4 +1,4 @@
-import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { VariablesService } from '../variables/variables.service';
@@ -15,17 +15,12 @@ interface IHeaders { [key: string]: string }
 })
 export class ApiService {
 
-  httpClientBackend: HttpClient | any;
-
   constructor(
     private actRoute: ActivatedRoute,
-    private handler: HttpBackend,
     private http: HttpClient,
     private util: UtilService,
     private vars: VariablesService
-  ) {
-    this.httpClientBackend = new HttpClient(handler);
-  }
+  ) { }
 
   get(path: string, qParams?: any, headers?: IHeaders) {
     const { url, options } = this.handleReq(path, headers);
@@ -96,19 +91,12 @@ export class ApiService {
   }
 
   getClientIp() {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const ip = this.util.storage.getFromSession('iplocation');
       if (ip) {
-        this.setClientIP(ip);
+        await this.setClientIP(ip);
       } else {
-        this.httpClientBackend.get('https://devapis.ketto.org/api/third_party/iplocation', this.setReqOptions({ 'Content-Type': 'application/x-www-form-urlencoded' })).subscribe({
-          next: (res: any) => {
-            this.setClientIP(res?.data);
-          },
-          error: (err: any) => {
-            this.setClientIP();
-          }
-        });
+        await this.setClientIP();
       }
       resolve(true);
     });
