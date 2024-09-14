@@ -51,6 +51,7 @@ export class HondaComponent {
             }
           }
         });
+        this.emiData = this.emiData.reverse();
         this.filteredEmiData = this.emiData;
         this.isDataLoading = false;
         console.log(res);

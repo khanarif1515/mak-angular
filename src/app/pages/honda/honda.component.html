@@ -64,35 +64,6 @@
     </div>
 
     <div class="content">
-      @if (!selectedMonth && !selectedYear && +otherSelectedFilter === 0) {
-        <div class="cost">
-          <table>
-            <caption>{{amazeCost?.caption}}</caption>
-            <thead>
-              <tr>
-                <th>Source</th>
-                <th>Descriptio</th>
-                <th>Amount</th>
-                <th>Recieved</th>
-                <th>Paid</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (item of amazeCost?.data; track $index) {
-                <tr [ngClass]="{'b-bottom-3': item?.borderBottom, 'font-b': $index === amazeCost?.data?.length-1}">
-                  <td>{{item?.src}}</td>
-                  <td>{{item?.desc}}</td>
-                  <td>{{item?.amt}}</td>
-                  <td>{{item?.recieved}}</td>
-                  <td>{{item?.paid}}</td>
-                </tr>
-              }
-            </tbody>
-          </table>
-          <hr>
-        </div>
-      }
-
       <div class="emi-table">
         @for (emi of filteredEmiData; track $index; let i = $index) {
           <table>
@@ -128,6 +99,36 @@
       @if (filteredEmiData.length === 0) {
         <div class="no-data">No records found!</div>
       }
+
+      @if (!selectedMonth && !selectedYear && +otherSelectedFilter === 0) {
+        <div class="cost">
+          <table>
+            <caption>{{amazeCost?.caption}}</caption>
+            <thead>
+              <tr>
+                <th>Source</th>
+                <th>Descriptio</th>
+                <th>Amount</th>
+                <th>Recieved</th>
+                <th>Paid</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of amazeCost?.data; track $index) {
+                <tr [ngClass]="{'b-bottom-3': item?.borderBottom, 'font-b': $index === amazeCost?.data?.length-1}">
+                  <td>{{item?.src}}</td>
+                  <td>{{item?.desc}}</td>
+                  <td>{{item?.amt}}</td>
+                  <td>{{item?.recieved}}</td>
+                  <td>{{item?.paid}}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+          <hr>
+        </div>
+      }
+
     </div>
   </div>
 }
