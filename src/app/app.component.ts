@@ -4,10 +4,10 @@ import { filter, map, mergeMap, pairwise } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { API_URLS } from 'src/environments/api-urls';
 import { ApiService, EventsService, ScriptLoaderService, SeoService, UtilService, VariablesService } from './shared/services';
-import { IUser } from './shared/model/user.model';
 import { ICLientData } from './shared/model/client.model';
 import { DefaultIPLocation } from './shared/model/default-ip';
 import { DefaultLayoutConfig, PageLayoutConfig } from './shared/model/layout-config.model';
+import { IUser } from './shared/model/user.model';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +17,7 @@ import { DefaultLayoutConfig, PageLayoutConfig } from './shared/model/layout-con
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-  title = 'MAK';
+
   qParams: any;
   loadingRouteConfig = true;
 
@@ -50,21 +50,20 @@ export class AppComponent implements OnInit {
       this.getClientIP();
       this.setUser();
     }
+    this.util.listenToGlabalJsVar();
   }
 
   @HostListener('window:load', [])
   onWindowLoads() {
     if (this.vars.isBrowser) {
-      // this.scriptLoader.loadScript('clevertap', '', true);
-      // if (environment.name !== 'local') {
-      //   this.scriptLoader.loadScript('gtm', '', true);
-      // }
-      // if (environment.production) {
-      //   this.scriptLoader.loadScript('microsoft_clarity', '', true);
-      // }
+      this.scriptLoader.loadScript('clevertap', '', true);
+      if (environment.production) {
+        this.scriptLoader.loadScript('gtm', '', true, this.vars.domain_details.name);
+        this.scriptLoader.loadScript('microsoft_clarity', '', true);
+      }
       this.vars.userData$.subscribe({
         next: res => {
-          if(res?.id) {
+          if (res?.id) {
             this.events.clarityEventsPush(res.id);
             if (res?.isDummyEmail) {
               this.vars.isDummyEmail = true;
@@ -104,6 +103,7 @@ export class AppComponent implements OnInit {
     ).subscribe((event) => {
       if (this.router.url.split('?')[0] !== this.vars.previousPageUrl.split('?')[0]) {
         this.vars.pageName = event['page_name'] || '';
+        this.vars.origin = event['origin'] || '';
         this.vars.pageLayoutConfig = PageLayoutConfig[this.vars.pageName] || DefaultLayoutConfig;
         this.seo.createCanonicalURL();
         this.util.setUtm();
@@ -212,12 +212,15 @@ export class AppComponent implements OnInit {
       const user = this.util.getUser()?.user;
       if (user && !this.vars.isVariableLogin) {
         this.util.setLogginStatus(user.isLoggedIn);
-        this.vars.userData$.next(this.util.getUserData());
         const domain = environment.name === 'local' ? 'localhost' : '.' + this.vars.domain_details?.url;
         this.util.storage.setCookie('is_logged_in', 'true', 365, domain);
       }
+      const userData = this.util.getUserData();
+      if (userData) {
+        this.vars.userData$.next(userData);
+      }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 
@@ -230,17 +233,13 @@ export class AppComponent implements OnInit {
           document.documentElement.style.setProperty('--primary-color', res.data.theme.theme_color);
           const code = this.util.hexToRgb(res.data.theme.theme_color);
           if (code) {
-            document.documentElement.style.setProperty('--primary-hover-color', `rgb(${code.r}, ${code.g}, ${code.b}, 1)`);
             document.documentElement.style.setProperty('--primary-color-rgb', `rgb(${code.r}, ${code.g}, ${code.b})`);
-            ['05', 1, 2, 3, 4, 5, 6, 7, 8, 9].forEach(val => {
-              document.documentElement.style.setProperty(`--primary-color-shadow-${val}`, `rgb(${code.r}, ${code.g}, ${code.b}, 0.${val})`);
-            });
           }
         }
         this.vars.isDomainLoaded$.next(true);
       },
       error: (err: any) => {
-        console.log(err);
+        // console.log(err);
       }
     });
   }

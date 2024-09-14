@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { VariablesService } from 'src/app/shared/services';
-import { HeaderComponent } from "../core/header/header.component";
-import { FooterComponent } from "../core/footer/footer.component";
-import { HeaderV2Component } from '../core/header-v2/header-v2.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderV2Component } from './components/header-v2/header-v2.component';
 
 @Component({
   selector: 'app-layout',
