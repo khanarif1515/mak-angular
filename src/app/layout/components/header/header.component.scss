@@ -1,0 +1,23 @@
+.wrap {
+  .content {
+    width: calc(100% - 32px);
+    max-width: 1140px;
+    margin: auto;
+    .routes {
+      width: 100%;
+      display: flex;
+      gap: 16px;
+      // overflow: scroll;
+      .route {
+        max-width: fit-content;
+        margin-bottom: 16px;
+        button {
+          padding: 16px;
+          color: white;
+          border-radius: 4px;
+          background: var(--secondary-color);
+        }
+      }
+    }
+  }
+}

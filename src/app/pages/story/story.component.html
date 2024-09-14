@@ -1,5 +1,35 @@
-@if (!fundraiser) {
-  <div class="skeleton skeleton-text"></div>
-} @else {
-  <p>story works!</p>
+@if (!isPageReady || vars.isStoryDataLoading) {
+  <div class="wrap">
+    <div class="content" style="width: calc(100% - 32px);margin-top: 100px;">
+      <div class="sections">
+        <div class="head">
+          <div class="skeleton" style="height: 90px;"></div>
+        </div>
+        <div class="section-1">
+          <div class="left">
+            <div class="skeleton" style="height: 120px;"></div>
+            <br>
+            <div class="skeleton" style="height: 50px;"></div>
+          </div>
+          <div class="right">
+            <div class="skeleton" style="height: 120px;"></div>
+            <br>
+            <div class="skeleton" style="height: 50px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+} @else if (!showDonate) {
+  <div class="wrap" [hidden]="vars.isStoryDataLoading">
+    <div class="content">
+      <div class="sections">
+        <div class="head">
+          <div class="title">
+            <h1>{{fundraiser?.story_title?.info_1 ? fundraiser?.story_title?.info_1: fundraiser?.title}}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 }

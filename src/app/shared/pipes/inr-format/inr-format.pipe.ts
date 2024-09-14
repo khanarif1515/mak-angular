@@ -22,7 +22,7 @@ export class InrFormatPipe implements PipeTransform {
     }
 
     // Combine the formatted integer part with the decimal part
-    const returnVal = (formattedIntegerPart!=='0' ? '₹' : '') + formattedIntegerPart + (decimalPart !== '00' ? '.' + decimalPart : '')
+    const returnVal = formattedIntegerPart + (decimalPart !== '00' ? '.' + decimalPart : '')
     return returnVal;
   }
 

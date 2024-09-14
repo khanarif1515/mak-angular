@@ -1,50 +1,3 @@
-// @use'sass:color';@use'sass:map';@use'sass:math';@use'@angular/material' as mat;
-// @function _estimate-hue($hues,$hue,$prev-hue,$next-hue){$weight:math.div($next-hue - $hue,$next-hue - $prev-hue) * 100%;@return color.mix(map.get($hues,$prev-hue),map.get($hues,$next-hue),$weight);}
-// @function _patch-missing-hues($palette){$neutral:map.get($palette,neutral);$palette:map.set($palette,neutral,4,_estimate-hue($neutral,4,0,10));$palette:map.set($palette,neutral,6,_estimate-hue($neutral,6,0,10));$palette:map.set($palette,neutral,12,_estimate-hue($neutral,12,10,20));$palette:map.set($palette,neutral,17,_estimate-hue($neutral,17,10,20));$palette:map.set($palette,neutral,22,_estimate-hue($neutral,22,20,25));$palette:map.set($palette,neutral,24,_estimate-hue($neutral,24,20,25));$palette:map.set($palette,neutral,87,_estimate-hue($neutral,87,80,90));$palette:map.set($palette,neutral,92,_estimate-hue($neutral,92,90,95));$palette:map.set($palette,neutral,94,_estimate-hue($neutral,94,90,95));$palette:map.set($palette,neutral,96,_estimate-hue($neutral,96,95,98));@return $palette;}
-// $k-palette: _patch-missing-hues((
-//   0:#000000,
-//   10:#192d3a,
-//   20:#224054,
-//   25:#244b64,
-//   30:#2c6385,
-//   35:#2f749f,
-//   40: var(--primary-color),
-//   50: var(--primary-color-shadow-9),// #43c4c4,
-//   60: var(--primary-color-shadow-8),// 67d2d2,
-//   70: var(--primary-color-shadow-7),// 8fdede,
-//   80: var(--primary-color-shadow-6),// b4e9e9,
-//   90: var(--primary-color-shadow-5),// d9f6f6,
-//   95: var(--primary-color-shadow-4),// ecf0ff,
-//   98: var(--primary-color-shadow-3),// f9f9ff,
-//   99: var(--primary-color-shadow-2),// fdfbff,
-//   100: var(--primary-color-shadow-1),// ffffff,
-//   secondary:(0:#000000,10:#131c2b,20:#283041,25:#333c4d,30:#3e4759,35:#4a5365,40:#565e71,50:#6f778b,60:#8891a5,70:#a3abc0,80:#bec6dc,90:#dae2f9,95:#ecf0ff,98:#f9f9ff,99:#fdfbff,100:#ffffff),
-//   neutral: (0:#000000,10:#1a1b1f,20:#2f3033,25:#3b3b3f,30:#46464a,35:#525256,40:#5e5e62,50:#77777a,60:#919094,70:#ababaf,80:#c7c6ca,90:#e3e2e6,95:#f2f0f4,98:#faf9fd,99:#fdfbff,100:#ffffff),
-//   neutral-variant: (0:#000000,10:#181c22,20:#2d3038,25:#383b43,30:#44474e,35:#4f525a,40:#5b5e66,50:#74777f,60:#8e9099,70:#a9abb4,80:#c4c6d0,90:#e0e2ec,95:#eff0fa,98:#f9f9ff,99:#fdfbff,100:#ffffff),
-//   error: (0:#000000,10:#410002,20:#690005,25:#7e0007,30:#93000a,35:#a80710,40:var(--error-color),50:#de3730,60:#ff5449,70:#ff897d,80:#ffb4ab,90:#ffdad6,95:#ffedea,98:#fff8f7,99:#fffbff,100:#ffffff),
-// ));
-// @include mat.core();
-// $angular-app-theme:mat.define-theme((
-//   color: (theme-type:light,primary:$k-palette,tertiary:mat.$cyan-palette),
-//   typography:(plain-family:var(--primary-font))
-// ));
-// :root{@include mat.all-component-themes($angular-app-theme);}
-
-
-
-@use '@angular/material' as mat;
-@include mat.core();
-
-$equalall-theme: mat.define-theme((
-  color: (
-    theme-type: light,
-    primary: mat.$azure-palette,
-    tertiary: mat.$blue-palette,
-  ),
-  density: (
-    scale: 0,
-  )
-));
 
 // uncomment if required any module
 :root {
@@ -924,4 +877,79 @@ $equalall-theme: mat.define-theme((
   // --mat-tree-node-text-size: 1rem;
   // --mat-tree-node-text-weight: 400;
   --mat-tree-node-min-height: 48px;
+}
+
+
+.mat-mdc-menu-panel {
+  min-height: 64px;
+  max-height: calc(100vh - 48px);
+  background-color: white !important;
+  box-shadow: 0 2px 4px -1px #0003, 0 4px 5px #00000024, 0 1px 10px #0000001f !important;
+  border-radius: 4px !important;
+  .mat-mdc-menu-item {
+    min-height: 30px;
+    background: transparent;
+    color: #000000de;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 28px;
+    :hover {
+      color: var(--primary-color);
+    }
+    &.active {
+      background-color: var(--primary-color-shadow-1);
+    }
+  }
+}
+
+.mdc-snackbar {
+  .mat-mdc-snackbar-surface {
+    .mat-mdc-snack-bar-label {
+      color: #fff;
+    }
+  }
+  &.snackbar-error {
+    .mat-mdc-snack-bar-actions {
+      .mat-mdc-snack-bar-action {
+        --mat-snack-bar-button-color: #e82943;
+      }
+    }
+  }
+}
+
+.mat-mdc-checkbox {
+  .mdc-form-field {
+    align-items: center;
+    gap: 8px;
+    .mdc-checkbox {
+      .mdc-checkbox__background {
+        border-radius: 4px;
+        .mdc-checkbox__checkmark {
+          width: 85%;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+      .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background,
+      &.mdc-checkbox:not(:disabled):active .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background {
+        border: 0.5px solid #CCC;
+        border-color: #CCC;
+      }
+      .mdc-checkbox__native-control:checked~.mdc-checkbox__background {
+        .mdc-checkbox__checkmark-path {
+          color: #FCFCFC;
+        }
+      }
+      .mdc-checkbox__ripple,
+      .mdc-checkbox__native-control:focus~.mdc-checkbox__ripple {
+        background-color: #FCFCFC;
+        border-radius: 4px;
+      }
+    }
+    .mdc-label {
+      padding: 0;
+    }
+  }
+
 }

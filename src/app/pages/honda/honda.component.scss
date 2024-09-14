@@ -1,12 +1,7 @@
-.cost-skeleton {
-  width: 100%;
-  table {
-    width: 570px;
-  }
-}
 
 .wrap {
-  width: 570px;
+  // font-family: var(--font-source-sans-pro);
+  width: 580px;
   margin: 0;
   padding: 10px;
   .content {
@@ -38,7 +33,7 @@
       }
 
       .source {
-        min-width: 70px;
+        min-width: 90px;
       }
       .net-total,
       .total-amount {
@@ -76,7 +71,6 @@
 
 .filter-header {
   width: 100%;
-  max-width: calc(100% - 20px);
   display: inline-grid;
   display: -ms-inline-grid;
   display: -moz-inline-grid;

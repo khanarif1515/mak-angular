@@ -2,19 +2,21 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { CurrencyComponent } from 'src/app/core/currency/currency.component';
 import { InrFormatPipe } from 'src/app/shared/pipes/inr-format/inr-format.pipe';
-import { ApiService, UtilService } from 'src/app/shared/services';
-import { API_URLS } from 'src/environments/api-urls';
+import { TypeofPipe } from 'src/app/shared/pipes/typeof/typeof.pipe';
+import { ApiService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-honda',
   standalone: true,
-  imports: [CommonModule, InrFormatPipe, FormsModule],
+  imports: [CommonModule, InrFormatPipe, CurrencyComponent, FormsModule, TypeofPipe],
   templateUrl: './honda.component.html',
   styleUrl: './honda.component.scss'
 })
 export class HondaComponent {
 
+  currency = 'INR';
   customTag = '';
   amazeCost: any;
   emiData: any[] = [];
@@ -29,8 +31,7 @@ export class HondaComponent {
 
   constructor(
     private actRoute: ActivatedRoute,
-    private api: ApiService,
-    private util: UtilService
+    private api: ApiService
   ) { }
 
   ngOnInit() {
@@ -54,12 +55,11 @@ export class HondaComponent {
         this.emiData = this.emiData.reverse();
         this.filteredEmiData = this.emiData;
         this.isDataLoading = false;
-        console.log(res);
       },
       error: (err: any) => {
         // this.util.router.navigate(['/404']);
         this.isDataLoading = false;
-        console.log(err);
+        // console.log(err);
       }
     });
   }

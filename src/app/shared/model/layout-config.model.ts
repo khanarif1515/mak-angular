@@ -1,6 +1,6 @@
 
-export type IPageNames = 'home' | 'stories' | 'thank_you' | 'page_not_found' | 'profile' | 'donations' | 'payment_redirect_page' | '';
-export type IPageOrigins = 'h' | 's' | 'ty' | '404' | 'pf' | 'dn' | 'prp' | '';
+export type IPageNames = 'home' | 'stories' | 'thank_you' | 'page_not_found' | 'profile' | 'donations' | 'payment_redirect_page'| 'aboutus' | 'honda' | 'guarantee' | '';
+export type IPageOrigins = 'h' | 's' | 'ty' | '404' | 'pf' | 'dn' | 'prp' | 'ho'| 'ab'| 'gt' | '';
 
 export const PAGE_ORIGIN_MAP: Record<IPageOrigins, IPageNames> = {
   h: 'home',
@@ -10,6 +10,9 @@ export const PAGE_ORIGIN_MAP: Record<IPageOrigins, IPageNames> = {
   pf: 'profile',
   dn: 'donations',
   prp: 'payment_redirect_page',
+  ho: 'honda',
+  'ab': 'aboutus',
+  'gt': 'guarantee',
   '': ''
 };
 
@@ -47,7 +50,7 @@ export const DefaultLayoutConfig: ILayoutConfig = {
   showMiniFooter: false
 };
 
-export const PageLayoutConfig: any = {
+export const PageLayoutConfig: Record<IPageNames, ILayoutConfig> = {
   'home': {
     ...DefaultLayoutConfig,
     showHeader: false,
@@ -84,5 +87,14 @@ export const PageLayoutConfig: any = {
     ...DefaultLayoutConfig,
     showHeader: false,
     showFooter: false
+  },
+  'honda': {
+    ...DefaultLayoutConfig,
+    showHeader: false,
+    showFooter: false
+  },
+  '': {
+    ...DefaultLayoutConfig
   }
+
 };

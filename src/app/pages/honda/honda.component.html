@@ -1,25 +1,10 @@
 
 @if (isDataLoading) {
-  <div class="cost-skeleton">
-    <table>
-      <caption class="skeleton skeleton-text"></caption>
-      <thead>
-        <tr>
-          @for (item of [1,2,3]; track $index) {
-            <th class="skeleton skeleton-text"></th>
-          }
-        </tr>
-      </thead>
-      <tbody>
-        @for (item of [1,2]; track $index) {
-          <tr>
-            @for (item of [1,2,3,4,5]; track $index) {
-              <td class="skeleton skeleton-text"></td>
-            }
-          </tr>
-        }
-      </tbody>
-    </table>
+  <div class="wrap">
+    <div class="skeleton" style="height: 41px; margin-bottom: 51px;"></div>
+    @for (item of [1,2,3,4,5,6,7,8,9]; track $index) {
+      <div class="skeleton" style="height: 30px; margin-bottom: 8px;"></div>
+    }
   </div>
 }
 
@@ -73,23 +58,23 @@
             </thead>
             <tbody>
               @if (emi?.previousPending) {
-                <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: 'previous-row', src: 'Previous', desc: 'Remaining', netTotal: emi?.previousPending | inrFormat, total: emi?.previousPending | inrFormat}}" />
+                <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: 'previous-row', src: 'Previous', desc: 'Remaining', netTotal: emi?.previousPending, total: emi?.previousPending}}" />
               }
               @for (rowData of emi?.rowData || []; track $index; let j = $index) {
                 @if (rowData?.src) {
                   <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: (j!==0 || emi?.previousPending ?'b-top-3' : ''), src: rowData?.src, desc: '', netTotal: '', total: ''}}" />
                 }
                 @for (row of rowData?.rows; track $index; let k = $index) {
-                  <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: !rowData?.src && k===0 ? 'b-top-3': '', src: row?.src, desc: row?.desc, netTotal: row?.amt | inrFormat, total: row?.total | inrFormat}}" />
+                  <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: !rowData?.src && k===0 ? 'b-top-3': '', src: row?.src, desc: row?.desc, netTotal: row?.amt, total: row?.total}}" />
                 }
                 @if (rowData?.src) {
-                  <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: '', src: '', desc: '', netTotal: 'Total =>', total: rowData?.total | inrFormat}}" />
+                  <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: '', src: '', desc: '', netTotal: 'Total =>', total: rowData?.total}}" />
                 }
               }
               <ng-container [ngTemplateOutlet]="rowTemplate" />
-              <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: 'payable-row b-top-3', src: '', desc: 'Total Payable', netTotal: '=>', total: emi?.payable | inrFormat}}" />
-              <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: 'paid-row', src: '', desc: 'Paid', netTotal: '=>', total: emi?.paid | inrFormat}}" />
-              <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: 'remaining-row', src: '', desc: 'Remaining Amount', netTotal: '=>', total: emi?.remaining | inrFormat}}" />
+              <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: 'payable-row b-top-3', src: '', desc: 'Total Payable', netTotal: '=>', total: emi?.payable}}" />
+              <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: 'paid-row', src: '', desc: 'Paid', netTotal: '=>', total: emi?.paid}}" />
+              <ng-container [ngTemplateOutlet]="rowTemplate" [ngTemplateOutletContext]="{rowData: {class: 'remaining-row', src: '', desc: 'Remaining Amount', netTotal: '=>', total: emi?.remaining}}" />
             </tbody>
           </table>
           <hr>
@@ -137,7 +122,7 @@
   <tr class="{{data?.class}}">
     <td class="source">{{data?.src}}</td>
     <td class="description">{{data?.desc}}</td>
-    <td class="net-total">{{data?.netTotal}}</td>
-    <td class="total-amount">{{data?.total}}</td>
+    <td class="net-total">@if ((data?.netTotal | typeof) === 'number' && data?.netTotal > 0) { <app-currency [currency]="currency" />}{{data?.netTotal | inrFormat}}</td>
+    <td class="total-amount">@if ((data?.total | typeof) === 'number' && data?.total > 0) { <app-currency [currency]="currency" />}{{data?.total | inrFormat}}</td>
   </tr>
 </ng-template>
