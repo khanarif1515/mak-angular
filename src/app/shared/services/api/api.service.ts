@@ -3,6 +3,10 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { VariablesService } from '../variables/variables.service';
 import { API_URLS } from 'src/environments/api-urls';
+import { UtilService } from '../util/util.service';
+import { ICLientData } from '../../model/client.model';
+import { DefaultIPLocation } from '../../model/default-ip';
+import { ActivatedRoute } from '@angular/router';
 
 interface IHeaders { [key: string]: string }
 
@@ -12,7 +16,9 @@ interface IHeaders { [key: string]: string }
 export class ApiService {
 
   constructor(
+    private actRoute: ActivatedRoute,
     private http: HttpClient,
+    private util: UtilService,
     private vars: VariablesService
   ) { }
 
@@ -80,12 +86,50 @@ export class ApiService {
 
   getShortURL(payload: any): Promise<string> {
     return new Promise((resolve, reject) => {
-        this.http.post<{ data: { data: { short_url: string } } }>((this.vars.domain_details?.apiUrl || environment.API_BASE_URL) + API_URLS.GET_SHORT_URL, payload, this.httpOptions).
-          subscribe({next: (res: any) => {
-            resolve(res.data.data.short_url);
-          }, error: (error) => {
-            reject(false);
-          }});
+      this.http.post<{ data: { data: { short_url: string } } }>((this.vars.domain_details?.apiUrl || environment.API_BASE_URL) + API_URLS.GET_SHORT_URL, payload, this.httpOptions).subscribe({
+        next: (res: any) => {
+          resolve(res.data.data.short_url);
+        }, error: (error) => {
+          reject(false);
+        }
+      });
+    });
+  }
+
+  getClientIp() {
+    return new Promise((resolve, reject) => {
+      const ip = this.util.storage.getFromSession('iplocation');
+      if (ip) {
+        this.setClientIP(ip);
+      } else {
+        this.get(API_URLS.GET_IP).subscribe({
+          next: (res: any) => {
+            this.setClientIP(res?.data);
+          },
+          error: (err: any) => {
+            this.setClientIP();
+          }
+        });
+      }
+      resolve(true);
+    });
+  }
+
+  setClientIP(ip: ICLientData = DefaultIPLocation) {
+    return new Promise((resolve, reject) => {
+      this.vars.clientLocationData$.next(ip);
+      this.util.storage.checkFromSession('iplocation', ip);
+      const currencyFromUrl = this.actRoute.snapshot.queryParams['selected_currency'];
+      const currencyFromCode = this.util.getCurrencyFromCode(ip.country_code);
+      const currencyFromSession = this.util.storage.getFromSession('currency');
+      if (currencyFromUrl) {
+        this.util.setCurrency(currencyFromUrl);
+      } else if (currencyFromSession) {
+        this.util.setCurrency(currencyFromSession);
+      } else if (currencyFromCode) {
+        this.util.setCurrency(currencyFromCode?.currency || '');
+      }
+      resolve(true);
     });
   }
 }

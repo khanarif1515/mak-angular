@@ -107,7 +107,7 @@ export class AppComponent implements OnInit {
         this.vars.pageLayoutConfig = PageLayoutConfig[this.vars.pageName] || DefaultLayoutConfig;
         this.seo.createCanonicalURL();
         this.util.setUtm();
-        this.gtmOnLoad(event);
+        // this.gtmOnLoad(event);
       }
     });
   }
@@ -166,45 +166,14 @@ export class AppComponent implements OnInit {
     }
   }
 
-  getClientIP() {
-    const ip = this.util.storage.getFromSession('iplocation');
-    if (ip) {
-      this.setClientIP(ip);
-    } else {
-      this.api.get(API_URLS.GET_IP).subscribe({
-        next: (res: any) => {
-          this.setClientIP(res?.data);
-        },
-        error: (err: any) => {
-          this.setClientIP();
-        }
-      });
-    }
-  }
-
-  setClientIP(ip: ICLientData = DefaultIPLocation) {
-    const criteoPartnerIDs: any = {
-      'IN': 56509,
-      'AE': 69550
-    };
-    this.vars.clientLocationData$.next(ip);
-    const criteoId = criteoPartnerIDs[ip.country_name] || 66025;
-    this.events.gtmPush({ 'CriteoPartnerID': criteoId });
-    this.util.storage.checkFromSession('iplocation', ip);
-    this.setCurrency(ip);
-  }
-
-  setCurrency(ip: ICLientData) {
-    const currencyFromUrl = this.actRoute.snapshot.queryParams['selected_currency'];
-    const currencyFromCode = this.util.getCurrencyFromCode(ip.country_code);
-    const currencyFromSession = this.util.storage.getFromSession('currency');
-    if (currencyFromUrl) {
-      this.util.setCurrency(currencyFromUrl);
-    } else if (currencyFromSession) {
-      this.util.setCurrency(currencyFromSession);
-    } else if (currencyFromCode) {
-      this.util.setCurrency(currencyFromCode?.currency || '');
-    }
+  async getClientIP() {
+    await this.api.getClientIp();
+    // const criteoPartnerIDs: any = {
+    //   'IN': 56509,
+    //   'AE': 69550
+    // };
+    // const criteoId = criteoPartnerIDs[this.vars.clientLocationData$.getValue()?.country_name || 0] || 66025;
+    // this.events.gtmPush({ 'CriteoPartnerID': criteoId });
   }
 
   setUser() {
