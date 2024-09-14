@@ -56,23 +56,23 @@ export class AppComponent implements OnInit {
   @HostListener('window:load', [])
   onWindowLoads() {
     if (this.vars.isBrowser) {
-      this.scriptLoader.loadScript('clevertap', '', true);
-      if (environment.production) {
-        this.scriptLoader.loadScript('gtm', '', true, this.vars.domain_details.name);
-        this.scriptLoader.loadScript('microsoft_clarity', '', true);
-      }
-      this.vars.userData$.subscribe({
-        next: res => {
-          if (res?.id) {
-            this.events.clarityEventsPush(res.id);
-            if (res?.isDummyEmail) {
-              this.vars.isDummyEmail = true;
-            } else {
-              this.vars.isDummyEmail = false;
-            }
-          }
-        }
-      });
+      // this.scriptLoader.loadScript('clevertap', '', true);
+      // if (environment.production) {
+      //   this.scriptLoader.loadScript('gtm', '', true, this.vars.domain_details.name);
+      //   this.scriptLoader.loadScript('microsoft_clarity', '', true);
+      // }
+      // this.vars.userData$.subscribe({
+      //   next: res => {
+      //     if (res?.id) {
+      //       this.events.clarityEventsPush(res.id);
+      //       if (res?.isDummyEmail) {
+      //         this.vars.isDummyEmail = true;
+      //       } else {
+      //         this.vars.isDummyEmail = false;
+      //       }
+      //     }
+      //   }
+      // });
     }
   }
 
