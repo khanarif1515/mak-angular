@@ -1,0 +1,10 @@
+
+@if (vars.pageLayoutConfig?.showHeader) {
+  <app-header />
+}
+
+<router-outlet />
+
+@if (vars.pageLayoutConfig?.showFooter) {
+  <app-footer />
+}

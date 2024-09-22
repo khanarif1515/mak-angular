@@ -1,0 +1,6 @@
+<p>side-navbar works!</p>
+@for (item of actBtns; track $index) {
+  <button [routerLink]="item.link">{{item.label}}</button>
+  <br>
+  <br>
+}
