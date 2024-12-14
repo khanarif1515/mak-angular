@@ -1,8 +1,7 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: '[appImageFallback]',
-  standalone: true
+  selector: '[appImageFallback]'
 })
 export class ImageFallbackDirective {
 

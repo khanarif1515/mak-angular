@@ -9,7 +9,6 @@ import { API_URLS } from 'src/environments/api-urls';
 
 @Component({
   selector: 'app-story',
-  standalone: true,
   imports: [],
   templateUrl: './story.component.html',
   styleUrl: './story.component.scss'
