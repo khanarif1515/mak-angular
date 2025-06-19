@@ -1,171 +1,140 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { inject, Injectable } from '@angular/core';
 import { UtilService } from '../util/util.service';
-import { VariablesService } from '../variables/variables.service';
-import { IFundraiser } from '../../model/fundraiser.model';
-import { Meta, MetaDefinition } from '@angular/platform-browser';
+import { VarService } from '../var/var.service';
+import { Meta, MetaDefinition, Title } from '@angular/platform-browser';
+import { ITagObj, SEODATA } from '../../models/seo.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SeoService {
 
-  constructor(
-    public meta: Meta,
-    private util: UtilService,
-    private vars: VariablesService
-  ) { }
+  readonly title = inject(Title);
+  readonly meta = inject(Meta);
+  private readonly util = inject(UtilService);
+  private readonly vars = inject(VarService);
 
-  createAmpHtml(page: string, customTag: string) {
-    const url = this.vars.domain_details.name + `/amp/${page}/${encodeURIComponent(customTag)}`;
-    const existingRel: any = this.util.document.querySelector('link[rel="amphtml"]');
-    if (existingRel) {
-      existingRel.href = url;
-    } else {
-      const link: HTMLLinkElement = this.util.document?.createElement('link');
+  constructor() { }
+
+  setPageTitle(title?: string) {
+    title = title || SEODATA?.[this.vars.origin]?.title;
+    this.title.setTitle(title.replace(/{{HOST_NAME}}/g, this.vars.hostData.name));
+  }
+
+  setDefaultMeta() {
+    const seoTag = SEODATA?.[this.vars.origin];
+    if (seoTag) {
+      const url = this.util.getCurrentUrl();
+      this.addMetaTags(this.getTagObject({
+        ...seoTag,
+        url: url
+      }));
+    }
+  }
+
+  setCanonical() {
+    const url = this.util.getCurrentUrl();
+    let canonicalLink = this.vars.document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonicalLink) {
+      canonicalLink = this.vars.document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      this.vars.document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.href = url;
+  }
+
+  updateCanonical(url: string) {
+    const link = this.vars.document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    !url && link ? link?.remove() : link ? link.href = url : null;
+  }
+
+  setAmpHtml(page: string, customTag: string) {
+    const encodedTag = encodeURIComponent(customTag);
+    const ampUrl = `${this.vars.hostData.fullUrl}/amp/${page}/${encodedTag}`;
+    let link = this.vars.document.querySelector<HTMLLinkElement>('link[rel="amphtml"]');
+    if (!link) {
+      link = this.vars.document.createElement('link');
       link.setAttribute('rel', 'amphtml');
-      this.util.document.head.appendChild(link);
-      link.setAttribute('href', url);
+      this.vars.document.head.appendChild(link);
     }
+    link.href = ampUrl;
   }
 
-  removeAmpHtml() {
-    const existingAmpHtml = this.util.document.querySelector('link[rel="amphtml"]');
-    if (existingAmpHtml) {
-      existingAmpHtml.remove();
-    }
+  updateAmpHtml(url: string) {
+    const link = this.vars.document.querySelector<HTMLLinkElement>('link[rel="amphtml"]');
+    !url && link ? link?.remove() : link ? link.href = url : null;
   }
 
-  createCanonicalURL() {
-    let url = this.util.document.URL;
-    if (!this.vars.isBrowser) {
-      url = this.vars.domain_details.url;
+  setSchemaObject(seoJson: Record<string, any>, id?: string) {
+    if (!seoJson) return;
+    const script = this.vars.document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(seoJson);
+    if (id) {
+      script.id = id;
+      const existing = this.vars.document.getElementById(id);
+      existing?.remove();
     }
-    const existingRel: any = this.util.document.querySelector('link[rel="canonical"]');
-    if (existingRel) {
-      existingRel.href = url;
-    } else {
-      const link: HTMLLinkElement = this.util.document.createElement('link');
-      link.setAttribute('rel', 'canonical');
-      this.util.document.head.appendChild(link);
-      link.setAttribute('href', url);
-    }
-  }
-
-  updateCanonicalURL(path: string) {
-    const existingRel: any = this.util.document.querySelector('link[rel="canonical"]');
-    if (existingRel) {
-      existingRel.href = this.vars.domain_details.url + path;
-    }
-  }
-
-  schemaOrgObject(seoJson: any, id?: any) {
-    if (!seoJson) { return; }
-    const s = this.util.document.createElement('script');
-    s.type = 'application/ld+json';
-    s.innerHTML = JSON.stringify(seoJson);
-    if (id) { s.id = id; }
-    const head = this.util.document.getElementsByTagName('head')[0];
-    head.appendChild(s);
-  }
-
-  stroyPageMetaTags(fundraiser?: IFundraiser) {
-    const storyDesc = this.util.document.createElement('div');
-    const htmlString = fundraiser?.story_description?.info_1 || '';
-    storyDesc.innerHTML = htmlString.replace(/<img[^>]*>/g, '');
-    let content: string = storyDesc.textContent.replace(/(\r\n|\n|\r)/gm, '');
-    content = content.length > 155 ? content.substring(0, 155).concat('...') : content;
-    const campaignerName = fundraiser?.campaigner?.full_name || '';
-    return {
-      description: `${this.util.capitalizeFirstLetter(campaignerName)}, ${content}`,
-      keywords: 'story',
-      campaigner: campaignerName,
-      title: fundraiser?.story_title?.info_1 || fundraiser?.title || '',
-      image: fundraiser?.leaderboard?.cdn_path || fundraiser?.theater?.cdn_path || '',
-      url: `${this.vars.domain_details?.url}/stories/${fundraiser?.custom_tag}`,
-      site: ''
-    };
-  }
-
-  createTagObject(data: any): MetaDefinition[] {
-    const tags: MetaDefinition[] = [
-      { name: 'author', content: data?.site },
-      { name: 'description', content: data?.description },
-      { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:site', content: '' },
-      { name: 'twitter:image', content: data?.image },
-      { name: 'twitter:description', content: data?.description },
-      { property: 'fb:app_id', content: environment.facebook_id },
-      { property: 'og:title', content: data?.title },
-      { property: 'og:site_name', content: data?.site },
-      { property: 'og:type', content: '' },
-      { property: 'og:url', content: data?.url },
-      { property: 'og:image', content: data?.image },
-      { property: 'og:image:secure_url', content: data?.image },
-      { property: 'og:description', content: data?.description },
-    ];
-
-    if (data?.robots) {
-      tags.push({ name: 'robots', content: data?.robots });
-    }
-
-    if (data?.campaigner) {
-      tags.push({
-        name: 'keywords',
-        content: `${data?.title?.trim()}, ${data.campaigner?.trim()}, crowdfunding platform in India, raise funds, ${data?.keywords}`
-      });
-      tags.push({
-        name: 'twitter:title',
-        content: `${data?.title?.trim()} by ${data?.campaigner?.trim()}`
-      });
-    } else {
-      tags.push({
-        name: 'keywords',
-        content: `${data?.title?.trim()}, crowdfunding platform in India, raise funds, ${data?.keywords}`
-      });
-      tags.push({
-        name: 'twitter:title',
-        content: `${data?.title?.trim()}`
-      });
-    }
-    return tags;
+    this.vars.document.head.appendChild(script);
   }
 
   addMetaTags(data: MetaDefinition[]) {
-    for (const item of data) {
-      if (item.name) {
-        this.meta.updateTag(item);
+    data?.forEach(tag => {
+      if (tag.name || tag.property) {
+        this.meta.updateTag(tag);
       }
-      if (item.property) {
-        this.meta.updateTag(item);
-      }
-    }
+    });
   }
 
   removeMetaTags(data: MetaDefinition[]) {
-    if (data && data.length) {
-      for (const item of data) {
-        if (item.name) {
-          this.meta.removeTag(`name='${item.name}'`);
-        }
-        if (item.property) {
-          this.meta.removeTag(`property='${item.property}'`);
-        }
+    data?.forEach(tag => {
+      if (tag.name) {
+        this.meta.removeTag(`name='${tag.name}'`);
       }
-    }
+      if (tag.property) {
+        this.meta.removeTag(`property='${tag.property}'`);
+      }
+    });
   }
 
-  schamObjectForVideos(data: any) {
-    const videoObject = {
+  getTagObject(data: ITagObj): MetaDefinition[] {
+    const { title, description, image, keywords, robots, seoTitle, site, twitterTitle, url } = data;
+    const tags: MetaDefinition[] = [
+      { name: 'author', content: site || '' },
+      { name: 'keywords', content: keywords || '' },
+      { name: 'description', content: description || '' },
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:creator', content: site || '' },
+      { name: 'twitter:site', content: site || '' },
+      { name: 'twitter:title', content: twitterTitle || seoTitle || title },
+      { name: 'twitter:image', content: image || ((this.vars.isBrowser ? window.location.origin : '') + this.vars.hostData.logoLightBg) },
+      { name: 'twitter:description', content: description || '' },
+      { name: 'robots', content: robots || 'index, follow' },
+      { property: 'og:title', content: seoTitle || title },
+      { property: 'og:description', content: description || '' },
+      { property: 'og:url', content: url || '' },
+      { property: 'og:site_name', content: site || '' },
+      { property: 'og:image', content: image || '' },
+      { property: 'og:image:secure_url', content: image || '' },
+      { property: 'og:type', content: 'website' },
+      { property: 'og:locale', content: 'en_US' }
+    ];
+    return tags.map(item => {
+      if (item.content) item.content = item.content.replace(/{{HOST_NAME}}/g, this.vars.hostData.name);
+      return item;
+    });
+  }
+
+  setVideoschamObject(data: { videoId: string | number, title: string, desc?: string, startDate?: string }) {
+    const videoSchema = {
       '@context': 'https://schema.org',
       '@type': 'VideoObject',
-      'name': data?.title,
-      'description': data?.desc,
-      'thumbnailUrl': `https://img.youtube.com/vi/${data?.videoId}/0.jpg`,
-      'uploadDate': `${data?.startDate}`,
-      'contentUrl': `https://www.youtube.com/embed/${data?.videoId}`
+      name: data.title,
+      description: data?.desc || '',
+      thumbnailUrl: `https://img.youtube.com/vi/${data.videoId}/0.jpg`,
+      uploadDate: data.startDate || new Date().toISOString(),
+      contentUrl: `https://www.youtube.com/embed/${data.videoId}`
     };
-    this.schemaOrgObject(videoObject);
+    this.setSchemaObject(videoSchema, 'schema-video');
   }
 }

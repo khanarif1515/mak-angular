@@ -1,0 +1,6 @@
+<div>
+  <input type="text" (change)="search($event)">
+</div>
+@for (item of countries; track $index) {
+  <div class="contry">{{$index+1}} - <app-optimized-image [src]="flagPath(item.code)" [maxWidth]="20" [maxHeight]="20" alt="{{item.code}}" /> {{item.name}} ({{item.nameLang||item.name}})</div>
+}

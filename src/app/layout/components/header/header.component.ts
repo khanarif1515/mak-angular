@@ -1,49 +1,52 @@
-import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { ApiService, VariablesService } from 'src/app/shared/services';
+import { NgClass } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { OptimizedImageComponent } from "../../../core/optimized-image/optimized-image.component";
+import { ApiService, UtilService, VarService } from '../../../shared/services';
+import { ApiEndPoints } from '../../../shared/models/api-endpoints.model';
+
+interface INavLinks { label: string; link: string; params?: { [key: string]: string } };
 
 @Component({
   selector: 'app-header',
-  standalone: true,
-  imports: [RouterModule],
+  imports: [RouterLink, NgClass, OptimizedImageComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
 
-  links: { link: string, label: string }[] = [
-    { link: '/honda/amaze', label: 'Amaze Costing' },
-    { link: '/', label: 'Home' },
-    { link: '/thankyou', label: 'Thank You' },
-    { link: '/404', label: '404' }
+  readonly api = inject(ApiService);
+  readonly vars = inject(VarService);
+  readonly util = inject(UtilService);
+
+  navLinks: INavLinks[] = [
+    { label: 'Home', link: '/' },
+    { label: 'About Us', link: '/about-us', params: { utm_source: 'test', utm_medium: 'medium', sgdv: 'dfgb' } },
+    { label: 'Profile', link: '/profile', params: { utm_source: 'test1', vfh: 'sdgtr' } },
+    { label: 'Story', link: '/story/supportzainab' },
+    { label: 'Honda', link: '/vehicle/honda' },
+    { label: 'Honda Amaze', link: '/vehicle/honda/amaze' },
+    { label: '404', link: '/404' },
+    { label: 'unknown', link: '/unknown' }
   ];
 
-  campaings: any[] = [];
-
-  constructor(
-    private api: ApiService,
-    public router: Router,
-    public vars: VariablesService
-  ) { }
-
-  ngOnInit(): void {
-    this.getAllCampaigns();
+  ngOnInit() {
+    this.getAllCmpaigns();
   }
 
-  getAllCampaigns() {
-    this.api.get('campaigns').subscribe({
+  getAllCmpaigns() {
+    this.api.request('get', ApiEndPoints.allCampaigns).subscribe({
       next: (res: any) => {
-        this.campaings = res?.data;
-        this.campaings.forEach(val => {
-          if (val?.custom_tag) {
-            this.links.push({ link: '/stories/'+val?.custom_tag, label: val?.custom_tag });
+        const camps: [] = res?.data;
+        const newLinks: INavLinks[] = [];
+        camps.forEach((item: any) => {
+          if (item?.custom_tag) {
+            newLinks.push({ label: item.custom_tag, link: '/story/' + item.custom_tag });
           }
         });
-        console.log(res);
+        this.navLinks = [...this.navLinks, ...newLinks];
       },
-      error: (err: any) => {
-        console.log(err);
-      }
+      error: (err: any) => { }
     });
   }
 }

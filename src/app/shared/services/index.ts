@@ -1,11 +1,10 @@
-export { ABService } from './AB/ab.service';
 export { ApiService } from './api/api.service';
 export { AuthService } from './auth/auth.service';
-export { DateService } from './date/date.service';
-export { EventsService } from './events/events.service';
+export { EventService } from './event/event.service';
 export { PaymentService } from './payment/payment.service';
 export { ScriptLoaderService } from './script-loader/script-loader.service';
 export { SeoService } from './seo/seo.service';
 export { StorageService } from './storage/storage.service';
 export { UtilService } from './util/util.service';
-export { VariablesService } from './variables/variables.service';
+export { VarService } from './var/var.service';
+// export { } from '.';

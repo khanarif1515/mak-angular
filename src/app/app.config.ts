@@ -2,33 +2,29 @@ import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideClientHydration } from '@angular/platform-browser';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
-import { HttpInterService } from './shared/services/http-inter/http-inter.interceptor';
-import { ABService, ApiService, AuthService, DateService, EventsService, ScriptLoaderService, SeoService, StorageService, UtilService, VariablesService } from './shared/services';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { ApiService, AuthService, EventService, PaymentService, ScriptLoaderService, SeoService, StorageService, UtilService, VarService } from './shared/services';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { httpInterceptor } from './shared/services/http-intercept/http-intercept.interceptor';
 
 const Services = [
-  ABService,
   ApiService,
   AuthService,
-  DateService,
-  EventsService,
+  EventService,
+  PaymentService,
   ScriptLoaderService,
   SeoService,
   StorageService,
   UtilService,
-  VariablesService
+  VarService
 ];
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideClientHydration(),
-    provideHttpClient(withFetch(), withInterceptorsFromDi()),
-    { provide: HTTP_INTERCEPTORS, useClass: HttpInterService, multi: true },
-    provideAnimationsAsync(),
+    provideClientHydration(withEventReplay()),
+    provideHttpClient(withInterceptors([httpInterceptor])),
     ...Services
   ]
 };

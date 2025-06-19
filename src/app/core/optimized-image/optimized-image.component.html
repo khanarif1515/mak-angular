@@ -1,0 +1,3 @@
+@if (currentSrc) {
+  <img [loading]="loading" ngSrc="{{currentSrc}}" width="{{maxWidth}}" height="{{maxHeight}}" [style]="`width:${width};height:${height};max-width:${maxWidth}px;max-height:${maxHeight}px;`" alt="{{alt}}" (error)="onError()">
+}

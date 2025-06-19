@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "mak-angular": {
+    "mak": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/mak-angular",
+            "outputPath": "dist/mak",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -29,7 +29,7 @@
               {
                 "glob": "**/*",
                 "input": "src/assets",
-                "output": "/assets"
+                "output": "assets"
               }
             ],
             "styles": [
@@ -39,7 +39,7 @@
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {
-              "entry": "server.ts"
+              "entry": "src/server.ts"
             }
           },
           "configurations": {
@@ -47,13 +47,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1MB",
+                  "maximumWarning": "500kB",
                   "maximumError": "1MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "50kB",
-                  "maximumError": "50kB"
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
                 }
               ],
               "fileReplacements": [
@@ -62,8 +62,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all",
-              "sourceMap": true
+              "outputHashing": "all"
             },
             "development": {
               "fileReplacements": [
@@ -83,10 +82,9 @@
                   "with": "src/environments/environment.ts"
                 }
               ],
-              "optimization": false,
+              "optimization": true,
               "extractLicenses": false,
-              "sourceMap": true,
-              "prerender": false
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -95,13 +93,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "mak-angular:build:production"
+              "buildTarget": "mak:build:production"
             },
             "development": {
-              "buildTarget": "mak-angular:build:development"
+              "buildTarget": "mak:build:development"
             },
             "local": {
-              "buildTarget": "mak-angular:build:local"
+              "buildTarget": "mak:build:local"
             }
           },
           "defaultConfiguration": "local"
@@ -134,9 +132,9 @@
     }
   },
   "cli": {
+    "analytics": false,
     "cache": {
       "enabled": false
-    },
-    "analytics": false
+    }
   }
 }

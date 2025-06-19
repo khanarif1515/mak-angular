@@ -1,23 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { VariablesService } from 'src/app/shared/services';
+import { Component, inject } from '@angular/core';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { HeaderV2Component } from './components/header-v2/header-v2.component';
+import { RouterOutlet } from '@angular/router';
+import { VarService } from '../shared/services';
 
 @Component({
   selector: 'app-layout',
-  standalone: true,
-  imports: [RouterOutlet, HeaderComponent, HeaderV2Component, FooterComponent],
+  imports: [HeaderComponent, FooterComponent, RouterOutlet],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'
 })
-export class LayoutComponent implements OnInit {
+export class LayoutComponent {
 
-  constructor(
-    public vars: VariablesService
-  ) { }
+  readonly vars = inject(VarService);
 
-  ngOnInit(): void {
-  }
 }

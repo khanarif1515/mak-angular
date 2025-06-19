@@ -1,23 +1,24 @@
-.wrap {
-  .content {
-    width: calc(100% - 32px);
-    max-width: 1140px;
-    margin: auto;
-    .routes {
-      width: 100%;
+
+.headerWrap {
+  .section1 {
+    .left {}
+    .middle {
       display: flex;
-      gap: 16px;
-      // overflow: scroll;
-      .route {
-        max-width: fit-content;
-        margin-bottom: 16px;
-        button {
-          padding: 16px;
-          color: white;
-          border-radius: 4px;
-          background: var(--secondary-color);
+      align-items: center;
+      gap: 5px;
+      a {
+        padding: 5px 10px;
+        border-radius: 2px;
+        font-weight: 500;
+        transition: all 0.2s ease-in;
+        &:hover {
+          background: var(--primary-color-shadow-05);
+        }
+        &.active {
+          background: var(--primary-color-shadow-1);
         }
       }
     }
+    .left {}
   }
 }

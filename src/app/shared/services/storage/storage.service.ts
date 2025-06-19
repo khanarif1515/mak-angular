@@ -1,175 +1,128 @@
-import { Injectable } from '@angular/core';
-import { VariablesService } from '../variables/variables.service';
+import { inject, Injectable } from '@angular/core';
+import { VarService } from '../var/var.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
+  readonly vars = inject(VarService);
 
-  constructor(
-    private vars: VariablesService
-  ) { }
+  constructor() { }
+
+  private parseJSON(data: string | null) {
+    try {
+      return data ? JSON.parse(data) : null;
+    } catch {
+      return null;
+    }
+  }
 
   add(name: string, data: any) {
-    if (this.vars.isBrowser) {
-      try {
-        localStorage.setItem(name, JSON.stringify(data));
-        return true;
-      } catch (e) {
-        // console.log(e);
-      }
+    if (!this.vars.isBrowser) return null;
+    try {
+      localStorage.setItem(name, JSON.stringify(data));
+      return true;
+    } catch {
+      return null;
     }
-    return null;
+  }
+
+  get(name: string) {
+    if (!this.vars.isBrowser) return null;
+    const data = this.parseJSON(localStorage.getItem(name));
+    return data && Object.keys(data).length ? data : null;
+  }
+
+  delete(name: string) {
+    if (!this.vars.isBrowser) return null;
+    try {
+      localStorage.removeItem(name);
+      return true;
+    } catch {
+      return null;
+    }
   }
 
   check(name: string, data: any) {
     if (this.get(name)) {
       this.delete(name);
-      this.add(name, data);
-    } else {
-      this.add(name, data);
     }
-  }
-
-  get(name: string) {
-    if (this.vars.isBrowser) {
-      try {
-        const data = JSON.parse(localStorage.getItem(name) || '{}');
-        if (Object.keys(data).length !== 0) {
-          return data;
-        }
-      } catch (e) {
-        // console.log(e);
-      }
-    }
-    return null;
-  }
-
-  delete(name: string) {
-    if (this.vars.isBrowser) {
-      try {
-        localStorage.removeItem(name);
-        return true;
-      } catch (e) {
-        // console.log(e);
-      }
-    }
-    return null;
+    return this.add(name, data);
   }
 
   getProperty(parent: string, child: string | number) {
-    if (this.vars.isBrowser) {
-      try {
-        const data = JSON.parse(localStorage.getItem(parent) || '{}');
-        if (Object.keys(data).length !== 0) {
-          return data[child] || null;
-        }
-      } catch (e) {
-        // console.log(e);
-      }
+    const parentData = this.get(parent);
+    return parentData ? parentData[child] ?? null : null;
+  }
+
+  addSessionData(name: string, data: any) {
+    if (!this.vars.isBrowser) return null;
+    try {
+      sessionStorage.setItem(name, JSON.stringify(data));
+      return true;
+    } catch {
+      return null;
     }
-    return null;
   }
 
   getFromSession(name: string) {
-    if (this.vars.isBrowser) {
-      try {
-        const data = JSON.parse(sessionStorage.getItem(name) || '{}');
-        if (Object.keys(data).length !== 0) {
-          return data;
-        }
-      } catch (e) {
-        // console.log(e);
-      }
-    }
-    return null;
+    if (!this.vars.isBrowser) return null;
+    const data = this.parseJSON(sessionStorage.getItem(name));
+    return data && Object.keys(data).length ? data : null;
   }
 
   deleteFromSession(name: string) {
-    if (this.vars.isBrowser) {
-      try {
-        sessionStorage.removeItem(name);
-        return true;
-      } catch (e) {
-        // console.log(e);
-      }
+    if (!this.vars.isBrowser) return null;
+    try {
+      sessionStorage.removeItem(name);
+      return true;
+    } catch {
+      return null;
     }
-    return null;
   }
 
   checkFromSession(name: string, data: any) {
     if (this.getFromSession(name)) {
       this.deleteFromSession(name);
-      this.addSessionData(name, data);
-    } else {
-      this.addSessionData(name, data);
     }
-  }
-
-  addSessionData(name: string, data: any) {
-    if (this.vars.isBrowser) {
-      try {
-        sessionStorage.setItem(name, JSON.stringify(data));
-        return true;
-      } catch (e) {
-        // console.log(e);
-      }
-    }
-    return null;
+    return this.addSessionData(name, data);
   }
 
   getPropertyFromSession(parent: string, child: string | number) {
-    if (this.vars.isBrowser) {
-      try {
-        const data = JSON.parse(sessionStorage.getItem(parent) || '{}');
-        if (Object.keys(data).length !== 0) {
-          return data[child] || false;
-        }
-      } catch (e) {
-        // console.log(e);
-      }
-    }
-    return null;
+    const parentData = this.getFromSession(parent);
+    return parentData ? parentData[child] ?? null : null;
   }
 
   getCookie(name: string) {
-    if (this.vars.isBrowser) {
-      const value = '; ' + document.cookie;
-      const parts = value.split('; ' + name + '=');
-      if (parts.length === 2) {
-        return parts?.pop()?.split(';').shift();
-      }
-    }
-    return null;
+    if (!this.vars.isBrowser) return null;
+    const match = this.vars.document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
   }
 
   getDecodedCookies(name: string) {
-    if (this.vars.isBrowser) {
-      const value = '; ' + document.cookie;
-      const parts = value.split('; ' + name + '=');
-      if (parts.length === 2) {
-        return JSON.parse(atob(decodeURIComponent(parts?.pop()?.split(';')?.shift() || '')));
-      }
-    }
-    return null;
-  }
-
-  setCookie(cname: string, cvalue: string, exdays: number, domain?: string): void {
-    if (this.vars.isBrowser) {
-      let expires = '';
-      if (exdays) {
-        const date = new Date();
-        date.setTime(date.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        expires = `; expires=${date.toUTCString()}`;
-      }
-      const domainString = domain ? `; domain=${domain}` : '';
-      document.cookie = `${cname}=${cvalue || ''}${expires}; path=/${domainString}`;
+    const cookieValue = this.getCookie(name);
+    if (!cookieValue) return null;
+    try {
+      return JSON.parse(atob(decodeURIComponent(cookieValue)));
+    } catch {
+      return null;
     }
   }
 
-  deleteCookie(name: string, domain?: string): void {
-    if (this.vars.isBrowser) {
-      document.cookie = name + `=; Expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/; domain=${domain || ''}`;
+  setCookie(name: string, value: string, exdays: number, domain?: string) {
+    if (!this.vars.isBrowser) return;
+    let expires = '';
+    if (exdays) {
+      const date = new Date();
+      date.setTime(date.getTime() + exdays * 24 * 60 * 60 * 1000);
+      expires = `; expires=${date.toUTCString()}`;
     }
+    const domainStr = domain ? `; domain=${domain}` : '';
+    document.cookie = `${name}=${encodeURIComponent(value || '')}${expires}; path=/${domainStr}`;
   }
+
+  deleteCookie(name: string, domain?: string) {
+    this.setCookie(name, '', -1, domain);
+  }
+
 }

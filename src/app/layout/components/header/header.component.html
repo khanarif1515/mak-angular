@@ -1,11 +1,12 @@
-<div class="wrap">
-  <div class="content">
-    <div class="routes">
-      @for (item of links; track $index) {
-      <div class="route">
-        <button [routerLink]="item?.link" [disabled]="router.url === item?.link">{{item?.label}}</button>
-      </div>
+<div class="headerWrap">
+  <div class="section1">
+    <div class="left"></div>
+    <div class="middle">
+      <a [routerLink]="'/'"><app-optimized-image [src]="vars.hostData.logoLightBg" width="100px" [alt]="vars.hostData.name" /></a>
+      @for (item of navLinks; track $index) {
+        <a [ngClass]="{'active': item.link === vars.router.url.split('?')[0]}" [routerLink]="item.link" [queryParams]="item.params">{{item.label}}</a>
       }
     </div>
+    <div class="right"></div>
   </div>
 </div>
