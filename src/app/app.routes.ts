@@ -1,51 +1,51 @@
 import { Routes } from '@angular/router';
-import { LayoutComponent } from './layout/layout.component';
 import { TPageOrigins } from './shared/models/layout.model';
+import { Layout } from './layout/layout';
 
 interface ILayoutRouteData {
   or: TPageOrigins;
 }
 
 export const routes: Routes = [{
-  path: '', component: LayoutComponent,
+  path: '', component: Layout,
   children: [
     {
       path: '404',
-      loadComponent: () => import('./pages/not-found/not-found.component').then(c => c.NotFoundComponent),
+      loadComponent: () => import('./pages/not-found/not-found').then(c => c.NotFound),
       data: { or: '404' } as ILayoutRouteData
     },
     {
       path: 'about-us',
-      loadComponent: () => import('./pages/about-us/about-us.component').then(c => c.AboutUsComponent),
+      loadComponent: () => import('./pages/about-us/about-us').then(c => c.AboutUs),
       data: { or: 'abs' } as ILayoutRouteData
     },
     {
       path: 'profile',
-      loadComponent: () => import('./pages/profile/profile.component').then(c => c.ProfileComponent),
+      loadComponent: () => import('./pages/profile/profile').then(c => c.Profile),
       data: { or: 'prf' } as ILayoutRouteData
     },
     {
       path: 'story/:tag',
-      loadComponent: () => import('./pages/story/story.component').then(c => c.StoryComponent),
+      loadComponent: () => import('./pages/story/story').then(c => c.Story),
       data: { or: 's' } as ILayoutRouteData
     },
     {
       path: 'vehicle/:brand/:model',
-      loadComponent: () => import('./pages/vehicle/vehicle.component').then(c => c.VehicleComponent),
+      loadComponent: () => import('./pages/vehicle/vehicle').then(c => c.Vehicle),
       data: { or: 'veh' } as ILayoutRouteData
     },
     {
       path: 'vehicle/:brand',
-      loadComponent: () => import('./pages/vehicle/vehicle.component').then(c => c.VehicleComponent),
+      loadComponent: () => import('./pages/vehicle/vehicle').then(c => c.Vehicle),
       data: { or: 'veh_br' } as ILayoutRouteData
     },
     {
       path: 'unknown',
-      loadComponent: () => import('./pages/vehicle/vehicle.component').then(c => c.VehicleComponent),
+      loadComponent: () => import('./pages/vehicle/vehicle').then(c => c.Vehicle),
     },
     {
       path: '', pathMatch: 'full',
-      loadComponent: () => import('./pages/home/home.component').then(c => c.HomeComponent),
+      loadComponent: () => import('./pages/home/home').then(c => c.Home),
       data: { or: 'h' } as ILayoutRouteData
     }
   ]
