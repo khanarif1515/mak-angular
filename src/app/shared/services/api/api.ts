@@ -2,6 +2,7 @@ import { HttpBackend, HttpClient, HttpHeaders, HttpParams } from '@angular/commo
 import { inject, Injectable } from '@angular/core';
 import { VarS } from '../var/var';
 import { UtilS } from '../util/util';
+import { environment } from '../../../../environments/environment';
 
 interface IHeaders { [key: string]: string }
 
@@ -23,7 +24,7 @@ export class ApiS {
   }
 
   getUrl(endpoint: string): string {
-    return endpoint.startsWith('http') ? endpoint : `${this.vars.hostData.apiBaseUrl}${endpoint}`;
+    return endpoint.startsWith('http') ? endpoint : `${this.vars.hostData.apiBaseUrl||environment.host.apiBaseUrl}${endpoint}`;
   }
 
   getOptions(endpoint: string, params?: any, data?: any, headers?: IHeaders) {
