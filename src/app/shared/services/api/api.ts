@@ -24,7 +24,7 @@ export class ApiS {
   }
 
   getUrl(endpoint: string): string {
-    return endpoint.startsWith('http') ? endpoint : `${this.vars.hostData.apiBaseUrl||environment.host.apiBaseUrl}${endpoint}`;
+    return endpoint.startsWith('http') ? endpoint : `${this.vars.hostData.apiBaseUrl}${endpoint}`;
   }
 
   getOptions(endpoint: string, params?: any, data?: any, headers?: IHeaders) {
