@@ -7,13 +7,13 @@ export const SEODATA: Record<TPageOrigins, ITagObj> = {
     title: 'Home | {{HOST_NAME}}',
     description: '{{HOST_NAME}} for managing expense and other records',
     keywords: '{{HOST_NAME}}, management, expense manage',
-    image: 'images/home.png'
+    image: '/images/home.png'
   },
   abs: {
     title: 'About us | {{HOST_NAME}}',
     description: 'About {{HOST_NAME}}',
     keywords: 'about, {{HOST_NAME}}, about {{HOST_NAME}}',
-    image: 'images/aboutus.png'
+    image: '/images/aboutus.png'
   },
   prf: {
     title: 'Profile | {{HOST_NAME}}'
