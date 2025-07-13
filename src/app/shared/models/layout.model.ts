@@ -1,6 +1,8 @@
 export const PAGE_ORIGIN_MAP = {
   '404': 'page_not_found',
   abs: 'aboutus',
+  ln: 'login',
+  sp: 'signup',
   h: 'home',
   prf: 'profile',
   s: 'story',
@@ -38,7 +40,9 @@ export const DefaultLayoutConfig: ILayoutConfig = {
 };
 
 const layoutOverrides: Partial<Record<TPageNames, Partial<ILayoutConfig>>> = {
-  vehicle: { showHeader: false, showFooter: false }
+  vehicle: { showHeader: false, showFooter: false },
+  login: { showProfile: false, showMenus: false, showFooter: false },
+  signup: { showProfile: false, showMenus: false, showFooter: false }
 };
 
 export const LayoutConfig = Object.keys(PAGE_ORIGIN_MAP).reduce((acc, originKey) => {

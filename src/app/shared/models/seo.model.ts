@@ -15,6 +15,16 @@ export const SEODATA: Record<TPageOrigins, ITagObj> = {
     keywords: 'about, {{HOST_NAME}}, about {{HOST_NAME}}',
     image: '/images/aboutus.jpg'
   },
+  ln: {
+    title: 'Login | {{HOST_NAME}}',
+    description: 'Continue with {{HOST_NAME}}',
+    keywords: 'login {{HOST_NAME}},'
+  },
+  sp: {
+    title: 'Signup | {{HOST_NAME}}',
+    description: 'Get started with {{HOST_NAME}}',
+    keywords: 'register {{HOST_NAME}}, signup {{HOST_NAME}},'
+  },
   prf: {
     title: 'Profile | {{HOST_NAME}}'
   },

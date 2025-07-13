@@ -21,6 +21,8 @@ export class Header {
   navLinks: INavLinks[] = [
     { label: 'Home', link: '/' },
     { label: 'About Us', link: '/about-us', params: { utm_source: 'test', utm_medium: 'medium', sgdv: 'dfgb' } },
+    { label: 'Login', link: '/login' },
+    { label: 'Signup', link: '/signup' },
     { label: 'Profile', link: '/profile', params: { utm_source: 'test1', vfh: 'sdgtr' } },
     { label: 'Story', link: '/story/supportzainab' },
     { label: 'Honda', link: '/vehicle/honda' },
