@@ -2,7 +2,7 @@
   <div class="section1">
     <div class="left"></div>
     <div class="middle">
-      <a [routerLink]="'/'"><app-optimized-image [src]="vars.hostData.logoLightBg" width="100px" [alt]="vars.hostData.name" /></a>
+      <a [routerLink]="'/'"><app-optimized-image [src]="vars.hostData.logoLightBg" width="100px" height="60px" [alt]="vars.hostData.name" /></a>
       @for (item of navLinks; track $index) {
         <a [class.active]="item.link === vars.router.url.split('?')[0]" [routerLink]="item.link" [queryParams]="item.params">{{item.label}}</a>
       }

@@ -27,6 +27,12 @@ export const SEODATA: Record<TPageOrigins, ITagObj> = {
   veh_br: {
     title: 'Vehicles Brand | {{HOST_NAME}}'
   },
+  lin: {
+    title: 'Login | {{HOST_NAME}}'
+  },
+  sup: {
+    title: 'Reister | {{HOST_NAME}}'
+  },
   "404": {
     title: 'Page Not Found'
   },

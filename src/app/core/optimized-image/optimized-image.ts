@@ -13,10 +13,11 @@ export class OptimizedImage {
   @Input() fallback: string = '/images/fallback.svg';
   @Input() width: string = '100%';
   @Input() height: string = 'auto';
-  @Input() maxWidth: number = 100; // in 'px'
-  @Input() maxHeight: number = 75; // in 'px'
+  @Input() maxWidth?: number; // in 'px'
+  @Input() maxHeight?: number; // in 'px'
   @Input() alt: string = '';
   @Input() loading?: 'lazy' | 'eager' = 'lazy';
+  @Input() objectFit?: 'cover' | 'contain' | 'fill' | 'scale-down' | '' = '';
 
   currentSrc!: string;
 

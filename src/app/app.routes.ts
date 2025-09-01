@@ -35,6 +35,16 @@ export const routes: Routes = [{
       data: { or: 'veh' } as ILayoutRouteData
     },
     {
+      path: 'login',
+      loadComponent: () => import('./pages/login-signup/login-signup').then(c => c.LoginSignup),
+      data: { or: 'lin' } as ILayoutRouteData
+    },
+    {
+      path: 'signup',
+      loadComponent: () => import('./pages/login-signup/login-signup').then(c => c.LoginSignup),
+      data: { or: 'sup' } as ILayoutRouteData
+    },
+    {
       path: 'vehicle/:brand',
       loadComponent: () => import('./pages/vehicle/vehicle').then(c => c.Vehicle),
       data: { or: 'veh_br' } as ILayoutRouteData

@@ -26,6 +26,8 @@ export class Header {
     { label: 'Honda', link: '/vehicle/honda' },
     { label: 'Honda Amaze', link: '/vehicle/honda/amaze' },
     { label: '404', link: '/404' },
+    { label: 'Login', link: '/login' },
+    { label: 'Register', link: '/signup' },
     { label: 'unknown', link: '/unknown' }
   ];
 

@@ -6,6 +6,8 @@ export const PAGE_ORIGIN_MAP = {
   s: 'story',
   veh_br: 'vehicle_brand',
   veh: 'vehicle',
+  lin: 'login',
+  sup: 'signup',
   '': ''
 } as const;
 
