@@ -1,1 +1,9 @@
 <p>home works!</p>
+
+<h2>Master Volume: {{ masterCount }}</h2>
+
+<div>
+  <app-signals [(count)]="masterCount" />
+</div>
+
+<button (click)="resetCount()">Reset Volume</button>
