@@ -28,10 +28,14 @@ export const SEODATA: Record<TPageOrigins, ITagObj> = {
     title: 'Vehicles Brand | {{HOST_NAME}}'
   },
   lin: {
-    title: 'Login | {{HOST_NAME}}'
+    title: 'Login | {{HOST_NAME}}',
+    description: 'Continue with {{HOST_NAME}}',
+    keywords: 'login {{HOST_NAME}},'
   },
   sup: {
-    title: 'Reister | {{HOST_NAME}}'
+    title: 'Reister | {{HOST_NAME}}',
+    description: 'Get started with {{HOST_NAME}}',
+    keywords: 'register {{HOST_NAME}}, signup {{HOST_NAME}},'
   },
   "404": {
     title: 'Page Not Found'
