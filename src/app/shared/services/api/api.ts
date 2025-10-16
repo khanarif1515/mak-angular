@@ -1,6 +1,6 @@
 import { HttpBackend, HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { VarS } from '../var/var';
+import { VarS } from '../var/var.service';
 import { UtilS } from '../util/util';
 import { environment } from '../../../../environments/environment';
 

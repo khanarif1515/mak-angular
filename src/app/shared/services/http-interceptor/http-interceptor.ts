@@ -2,7 +2,7 @@ import { HttpHandlerFn, HttpInterceptorFn, HttpParams, HttpRequest } from '@angu
 import { inject, REQUEST } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { UtilS } from '../util/util';
-import { VarS } from '../var/var';
+import { VarS } from '../var/var.service';
 import { Hosts } from '../../models/host.model';
 
 const getRawParams = (params: HttpParams) => {

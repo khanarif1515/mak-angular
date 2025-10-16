@@ -6,5 +6,5 @@ export { ScriptLoaderS } from './script-loader/script-loader';
 export { SeoS } from './seo/seo';
 export { StorageS } from './storage/storage';
 export { UtilS } from './util/util';
-export { VarS } from './var/var';
+export { VarS } from './var/var.service';
 // export { } from '.';

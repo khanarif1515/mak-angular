@@ -15,6 +15,16 @@ export class VarS {
   readonly platformId = inject(PLATFORM_ID);
   readonly router = inject(Router);
 
+  regex = {
+    name: /^[a-z ']+$/i,
+    email: /^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$/,
+    stringOnly: /^[a-zA-Z\s]+$/,
+    numberOnly: /^\d+(\.\d+)?$/,
+    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)(?!.*\s)[A-Za-z\d\W]{8,12}$/,
+    userName: /^(?=[a-z0-9._]+$)([^._]*\.){0,1}([^._]*_){0,1}[^._]*$/,
+    dob: /^\d{4}-\d{2}-\d{2}$/,
+    dialCode: /^\+\d{1,5}$/
+  };
   currency = 'INR';
   currentUrl = '';
   deviceType = '';

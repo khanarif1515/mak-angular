@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Meta, MetaDefinition, Title } from '@angular/platform-browser';
 import { UtilS } from '../util/util';
-import { VarS } from '../var/var';
+import { VarS } from '../var/var.service';
 import { ITagObj, SEODATA } from '../../models/seo.model';
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { VarS } from '../var/var';
+import { VarS } from '../var/var.service';
 
 @Injectable({
   providedIn: 'root'
