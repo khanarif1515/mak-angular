@@ -22,12 +22,12 @@ const toHttpParams = (obj: Record<string, string>): HttpParams => {
   return newParams;
 }
 
-const sanitizeParams = (params: HttpParams, util: UtilS) => {
+const sanitizeParams = (params: HttpParams, util: UtilS): HttpParams => {
   return toHttpParams(util.sanitizeObject(getRawParams(params)));
 }
 
-const injectUtmsToParams = (params: HttpParams, vars: VarS) => {
-  return toHttpParams({ ...getRawParams(params), ...vars.utms });
+const injectUtmsToParams = (params: HttpParams, vars: VarS): HttpParams => {
+  return toHttpParams({ ...getRawParams(params), ...(vars.utms || {}) });
 }
 
 export const httpInterceptor: HttpInterceptorFn = (req, next) => {
@@ -65,7 +65,7 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
     body = body ? util.sanitizeObject(body) : body;
   }
 
-  const cloneData: any = {
+  const cloneData: { params?: HttpParams; body?: any; setHeaders?: Record<string, string> } = {
     params: cleanParams,
     body: body
   };

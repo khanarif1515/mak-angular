@@ -16,10 +16,8 @@ export class App {
 
   ngOnInit() {
     this.routeChangeListener();
-    console.log(this.vars.isBrowser)
-    if (this.vars.isBrowser) {
-      console.log(this.vars.hostData);
-    }
+    console.log('isBrowser: ', this.vars.isBrowser)
+    console.log('hostData: ', this.vars.hostData);
     const webPageSchema = {
       '@context': 'http://schema.org',
       '@id': `${this.vars.hostData.url}`,

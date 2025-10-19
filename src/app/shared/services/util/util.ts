@@ -27,7 +27,7 @@ export class UtilS {
     }
     const sessionPlatform = this.storage.getFromSession('platform');
     const cookiePlatform = this.storage.getCookie('platform');
-    this.vars.deviceType = sessionPlatform || cookiePlatform || this.vars.deviceType;
+    this.vars.deviceType = (typeof sessionPlatform === 'string' && sessionPlatform) || (typeof cookiePlatform === 'string' && cookiePlatform) || this.vars.deviceType;
   }
 
   setUtm(utms?: IUTMs) {

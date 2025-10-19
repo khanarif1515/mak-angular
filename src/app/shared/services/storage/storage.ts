@@ -28,7 +28,7 @@ export class StorageS {
   get(name: string) {
     if (!this.vars.isBrowser) return null;
     const data = this.parseJSON(localStorage.getItem(name));
-    return data && Object.keys(data).length ? data : null;
+    return data && typeof data === 'object' && Object.keys(data).length ? data : null;
   }
 
   delete(name: string) {
@@ -50,7 +50,7 @@ export class StorageS {
 
   getProperty(parent: string, child: string | number) {
     const parentData = this.get(parent);
-    return parentData ? parentData[child] ?? null : null;
+    return parentData ? (parentData[child as keyof typeof parentData]) ?? null : null;
   }
 
   addSessionData(name: string, data: any) {
@@ -66,7 +66,7 @@ export class StorageS {
   getFromSession(name: string) {
     if (!this.vars.isBrowser) return null;
     const data = this.parseJSON(sessionStorage.getItem(name));
-    return data && Object.keys(data).length ? data : null;
+    return data && typeof data === 'object' && Object.keys(data).length ? data : null;
   }
 
   deleteFromSession(name: string) {
@@ -88,7 +88,7 @@ export class StorageS {
 
   getPropertyFromSession(parent: string, child: string | number) {
     const parentData = this.getFromSession(parent);
-    return parentData ? parentData[child] ?? null : null;
+    return parentData ? (parentData[child as keyof typeof parentData]) ?? null : null;
   }
 
   getCookie(name: string) {
