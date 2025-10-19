@@ -1,59 +1,61 @@
-import { Directive, ElementRef, Renderer2, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, Renderer2, HostListener, Input, inject } from '@angular/core';
 
 @Directive({
   selector: '[appRipple]'
 })
 export class RippleDirective {
-  // accept attribute-only usage (appRipple) which will pass a string when present
+  private readonly el = inject(ElementRef<HTMLElement>);
+  private readonly renderer = inject(Renderer2);
+
+  /** Enable or disable the ripple effect (default: true) */
   @Input('appRipple') set enabledInput(v: boolean | string | undefined) {
-    if (v === undefined || v === null) {
-      this.enabled = true;
-      return;
-    }
-    // attribute-only passes empty string, or a string value; treat truthy strings as true, 'false' as false
-    if (typeof v === 'string') {
-      this.enabled = !(v === 'false');
-      return;
-    }
-    this.enabled = Boolean(v);
+    this.enabled = v === undefined || v === null ? true : typeof v === 'string' ? v !== 'false' : !!v;
   }
   enabled = true;
+
+  /** Custom ripple color */
   @Input() rippleColor?: string;
+
+  /** If true, ripple always starts at element center */
   @Input() rippleCentered = false;
-  @Input() rippleDuration = 600; // ms
-  @Input() rippleRadius?: number; // px (diameter will be derived)
 
+  /** Duration of ripple animation (ms) */
+  @Input() rippleDuration = 500;
+
+  /** Optional fixed ripple radius */
+  @Input() rippleRadius?: number;
+
+  /** Internal cleanup */
   private static stylesInjected = false;
-  private removeTimers = new Set<number>();
+  private activeTimeouts = new Set<number>();
 
-  constructor(private el: ElementRef<HTMLElement>, private renderer: Renderer2) { }
+  constructor() { }
 
+  // === Lifecycle ===
   ngAfterViewInit(): void {
-    // Do not run in SSR
-    if (typeof window === 'undefined' || !this.el?.nativeElement) return;
-
-    this.ensureHostPosition();
-    this.injectStylesOnce();
+    if (typeof window === 'undefined') return; // SSR safety
+    this.prepareHost();
+    this.injectStyles();
   }
 
   ngOnDestroy(): void {
-    for (const t of this.removeTimers) {
-      try { window.clearTimeout(t); } catch { }
-    }
-    this.removeTimers.clear();
+    for (const timer of this.activeTimeouts) clearTimeout(timer);
+    this.activeTimeouts.clear();
   }
 
-  private ensureHostPosition() {
-    const el = this.el.nativeElement;
-    const style = window.getComputedStyle(el);
-    if (style.position === '' || style.position === 'static') {
-      this.renderer.setStyle(el, 'position', 'relative');
+  // === Helpers ===
+  private prepareHost(): void {
+    const host = this.el.nativeElement;
+    const style = window.getComputedStyle(host);
+    if (!style.position || style.position === 'static') {
+      this.renderer.setStyle(host, 'position', 'relative');
     }
-    this.renderer.setStyle(el, 'overflow', 'hidden');
+    this.renderer.setStyle(host, 'overflow', 'hidden');
   }
 
-  private injectStylesOnce() {
-    if (RippleDirective.stylesInjected) return;
+  private injectStyles(): void {
+    if (RippleDirective.stylesInjected || typeof document === 'undefined') return;
+
     const css = `
       .app-ripple {
         position: absolute;
@@ -62,13 +64,14 @@ export class RippleDirective {
         transform: scale(0);
         opacity: 0.36;
         will-change: transform, opacity;
-        background: var(--ripple-color, rgba(0,0,0,0.24));
+        background: var(--ripple-color, rgba(0, 0, 0, 0.24));
       }
-      .app-ripple.app-ripple-show {
+      .app-ripple.app-ripple-active {
         transform: scale(1);
         opacity: 0;
       }
     `;
+
     const styleEl = this.renderer.createElement('style');
     this.renderer.setProperty(styleEl, 'textContent', css);
     this.renderer.appendChild(document.head, styleEl);
@@ -77,69 +80,54 @@ export class RippleDirective {
 
   private createRipple(x: number, y: number) {
     if (!this.enabled) return;
+
     const host = this.el.nativeElement;
     const rect = host.getBoundingClientRect();
-
-    const diameter = this.rippleRadius && this.rippleRadius > 0
-      ? this.rippleRadius
-      : Math.max(rect.width, rect.height) * 2;
-
+    const size = this.rippleRadius && this.rippleRadius > 0 ? this.rippleRadius : Math.max(rect.width, rect.height) * 2;
     const ripple = this.renderer.createElement('span');
     this.renderer.addClass(ripple, 'app-ripple');
-
-    // set size
-    this.renderer.setStyle(ripple, 'width', `${diameter}px`);
-    this.renderer.setStyle(ripple, 'height', `${diameter}px`);
+    this.renderer.setStyle(ripple, 'width', `${size}px`);
+    this.renderer.setStyle(ripple, 'height', `${size}px`);
     this.renderer.setStyle(ripple, 'transition', `transform ${this.rippleDuration}ms ease-out, opacity ${this.rippleDuration}ms linear`);
     if (this.rippleColor) {
       this.renderer.setStyle(ripple, 'background', this.rippleColor);
     }
-    // position center or based on event
-    const left = x - rect.left - diameter / 2;
-    const top = y - rect.top - diameter / 2;
 
+    const left = x - rect.left - size / 2;
+    const top = y - rect.top - size / 2;
     this.renderer.setStyle(ripple, 'left', `${left}px`);
     this.renderer.setStyle(ripple, 'top', `${top}px`);
-    this.renderer.setStyle(ripple, 'position', 'absolute');
-
     this.renderer.appendChild(host, ripple);
 
-    // force layout then animate
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    ripple.offsetWidth; // force reflow
-    this.renderer.addClass(ripple, 'app-ripple-show');
+    // Trigger layout → animation
+    ripple.offsetHeight;
+    this.renderer.addClass(ripple, 'app-ripple-active');
 
-    const removeDelay = window.setTimeout(() => {
-      try { this.renderer.removeChild(host, ripple); } catch { }
-      this.removeTimers.delete(removeDelay);
-    }, this.rippleDuration + 50);
-    this.removeTimers.add(removeDelay);
+    // Remove after animation
+    const timer = window.setTimeout(() => {
+      try {
+        this.renderer.removeChild(host, ripple);
+      } catch { }
+      this.activeTimeouts.delete(timer);
+    }, this.rippleDuration + 100);
+    this.activeTimeouts.add(timer);
   }
 
   private createCenteredRipple() {
-    const host = this.el.nativeElement;
-    const rect = host.getBoundingClientRect();
+    const rect = this.el.nativeElement.getBoundingClientRect();
     this.createRipple(rect.left + rect.width / 2, rect.top + rect.height / 2);
   }
 
   @HostListener('pointerdown', ['$event'])
   onPointerDown(event: PointerEvent) {
-    if (typeof window === 'undefined') return;
-    if (!this.enabled) return;
-
-    // if centered mode requested, use center
-    if (this.rippleCentered) {
-      this.createCenteredRipple();
-      return;
-    }
-
-    // fallback to center if event has no coordinates
-    const x = (event.clientX && event.clientY) ? event.clientX : (this.el.nativeElement.getBoundingClientRect().left + this.el.nativeElement.getBoundingClientRect().width / 2);
-    const y = (event.clientX && event.clientY) ? event.clientY : (this.el.nativeElement.getBoundingClientRect().top + this.el.nativeElement.getBoundingClientRect().height / 2);
+    if (!this.enabled || typeof window === 'undefined') return;
+    if (this.rippleCentered) { this.createCenteredRipple(); return; }
+    const rect = this.el.nativeElement.getBoundingClientRect();
+    const x = event.clientX || rect.left + rect.width / 2;
+    const y = event.clientY || rect.top + rect.height / 2;
     this.createRipple(x, y);
   }
 
-  // keyboard activation (space/enter) should produce centered ripple similar to mat-ripple
   @HostListener('keydown', ['$event'])
   onKeydown(event: KeyboardEvent) {
     if (event.key === 'Enter' || event.key === ' ' || event.code === 'Space') {
