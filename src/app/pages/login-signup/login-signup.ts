@@ -1,11 +1,13 @@
 import { Component, ElementRef, inject, QueryList, ViewChildren } from '@angular/core';
 import { VarS } from '../../shared/services';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RippleDirective } from '../../shared/directives/ripple/ripple.directive';
 
 @Component({
   selector: 'app-login-signup',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RippleDirective
   ],
   templateUrl: './login-signup.html',
   styleUrl: './login-signup.scss'
