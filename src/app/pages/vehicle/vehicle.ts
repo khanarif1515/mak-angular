@@ -48,8 +48,8 @@ export class Vehicle {
     const endpoint = ApiEndPoints.getVehicle(this.brand, this.customTag);
     this.api.request('get', endpoint).subscribe({
       next: (res: any) => {
-        this.amazeCost = res?.amazeCost;
-        this.emiData = res?.emiData || [];
+        this.amazeCost = res?.data?.amazeCost;
+        this.emiData = res?.data?.emiData || [];
         this.emiData.forEach(item => {
           if (typeof item?.title === 'string') {
             const filterOpts = item.title.split(' ');

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { VarS } from '../../../shared/services';
 
 @Component({
   selector: 'app-footer',
@@ -7,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './footer.scss'
 })
 export class Footer {
+
+  readonly vars = inject(VarS);
 
 }

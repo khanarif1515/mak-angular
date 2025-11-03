@@ -3,12 +3,13 @@ import { ApiS, UtilS, VarS } from '../../../shared/services';
 import { ApiEndPoints } from '../../../shared/models/api-endpoints.model';
 import { RouterLink } from '@angular/router';
 import { OptimizedImage } from '../../../core/optimized-image/optimized-image';
+import { RippleDirective } from '../../../shared/directives/ripple/ripple.directive';
 
 interface INavLinks { label: string; link: string; params?: { [key: string]: string } };
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, OptimizedImage],
+  imports: [RouterLink, OptimizedImage, RippleDirective],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })

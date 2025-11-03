@@ -35,7 +35,7 @@ export class RippleDirective {
   ngAfterViewInit(): void {
     if (typeof window === 'undefined') return; // SSR safety
     this.prepareHost();
-    this.injectStyles();
+    // this.injectStyles();
   }
 
   ngOnDestroy(): void {
@@ -53,30 +53,30 @@ export class RippleDirective {
     this.renderer.setStyle(host, 'overflow', 'hidden');
   }
 
-  private injectStyles(): void {
-    if (RippleDirective.stylesInjected || typeof document === 'undefined') return;
+  // private injectStyles(): void {
+  //   if (RippleDirective.stylesInjected || typeof document === 'undefined') return;
 
-    const css = `
-      .app-ripple {
-        position: absolute;
-        border-radius: 50%;
-        pointer-events: none;
-        transform: scale(0);
-        opacity: 0.36;
-        will-change: transform, opacity;
-        background: var(--ripple-color, rgba(0, 0, 0, 0.24));
-      }
-      .app-ripple.app-ripple-active {
-        transform: scale(1);
-        opacity: 0;
-      }
-    `;
+  //   const css = `
+  //     .app-ripple {
+  //       position: absolute;
+  //       border-radius: 50%;
+  //       pointer-events: none;
+  //       transform: scale(0);
+  //       opacity: 0.36;
+  //       will-change: transform, opacity;
+  //       background: var(--ripple-color, rgba(0, 0, 0, 0.24));
+  //     }
+  //     .app-ripple.app-ripple-active {
+  //       transform: scale(1);
+  //       opacity: 0;
+  //     }
+  //   `;
 
-    const styleEl = this.renderer.createElement('style');
-    this.renderer.setProperty(styleEl, 'textContent', css);
-    this.renderer.appendChild(document.head, styleEl);
-    RippleDirective.stylesInjected = true;
-  }
+  //   const styleEl = this.renderer.createElement('style');
+  //   this.renderer.setProperty(styleEl, 'textContent', css);
+  //   this.renderer.appendChild(document.head, styleEl);
+  //   RippleDirective.stylesInjected = true;
+  // }
 
   private createRipple(x: number, y: number) {
     if (!this.enabled) return;

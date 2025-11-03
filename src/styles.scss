@@ -118,3 +118,19 @@ input {
     display: none !important;
   }
 }
+
+/* Ripple Effect */
+.app-ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: scale(0);
+  opacity: 0.36;
+  will-change: transform, opacity;
+  background: var(--ripple-color, rgba(0, 0, 0, 0.24));
+}
+
+.app-ripple.app-ripple-active {
+  transform: scale(1);
+  opacity: 0;
+}
