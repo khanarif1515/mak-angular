@@ -54,6 +54,11 @@ export const routes: Routes = [{
       loadComponent: () => import('./pages/vehicle/vehicle').then(c => c.Vehicle),
     },
     {
+      path: 'transactions/:username',
+      loadComponent: () => import('./pages/transactions/transactions.component').then(c => c.TransactionsComponent),
+      data: { or: 'txn' } as ILayoutRouteData
+    },
+    {
       path: '', pathMatch: 'full',
       loadComponent: () => import('./pages/home/home').then(c => c.Home),
       data: { or: 'h' } as ILayoutRouteData

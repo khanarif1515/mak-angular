@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DefaultLayoutConfig, ILayoutConfig, TPageNames, TPageOrigins } from '../../models/layout.model';
 import { Hosts, IHost } from '../../models/host.model';
 import { IUTMs } from '../../models/events.model';
+import { IUser } from '../../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,8 @@ export class VarS {
   pageName: TPageNames = '';
   fallBackImg = '/images/fallback.svg';
   utms?: IUTMs = undefined;
+  user?: IUser = undefined;
+  maskedUser?: IUser = undefined;
 
   constructor() {
     this.isBrowser = isPlatformBrowser(this.platformId);

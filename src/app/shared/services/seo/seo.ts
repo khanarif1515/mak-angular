@@ -17,7 +17,7 @@ export class SeoS {
 
   setPageTitle(title?: string) {
     title = title || SEODATA?.[this.vars.origin]?.title;
-    this.title.setTitle(title.replace(/{{HOST_NAME}}/g, this.vars.hostData.name));
+    this.title.setTitle(title.replace(/{{HOST_NAME}}/g, this.vars.hostData.name).replace(/{{USER_FULL_NAME}}/g, this.vars.user?.fullName || this.vars.maskedUser?.fullName || ''));
   }
 
   setDefaultMeta() {

@@ -8,6 +8,7 @@ export const PAGE_ORIGIN_MAP = {
   veh: 'vehicle',
   lin: 'login',
   sup: 'signup',
+  txn: 'transactions',
   '': ''
 } as const;
 
@@ -40,7 +41,8 @@ export const DefaultLayoutConfig: ILayoutConfig = {
 };
 
 const layoutOverrides: Partial<Record<TPageNames, Partial<ILayoutConfig>>> = {
-  vehicle: { showHeader: false, showFooter: false }
+  vehicle: { showHeader: false, showFooter: false },
+  transactions: { showHeader: false, showFooter: false }
 };
 
 export const LayoutConfig = Object.keys(PAGE_ORIGIN_MAP).reduce((acc, originKey) => {

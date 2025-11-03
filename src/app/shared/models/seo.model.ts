@@ -37,6 +37,11 @@ export const SEODATA: Record<TPageOrigins, ITagObj> = {
     description: 'Get started with {{HOST_NAME}}',
     keywords: 'register {{HOST_NAME}}, signup {{HOST_NAME}},'
   },
+  txn: {
+    title: 'Transactions - {{USER_FULL_NAME}} | {{HOST_NAME}}',
+    description: 'Manage your transactions with {{HOST_NAME}}',
+    keywords: 'transactions, manage transactions, {{HOST_NAME}} transactions'
+  },
   "404": {
     title: 'Page Not Found'
   },
