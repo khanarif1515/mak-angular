@@ -1,67 +1,40 @@
 import { Routes } from '@angular/router';
+import { LayoutComponent } from './layout/layout.component';
 import { TPageOrigins } from './shared/models/layout.model';
-import { Layout } from './layout/layout';
 
 interface ILayoutRouteData {
   or: TPageOrigins;
 }
 
-export const routes: Routes = [{
-  path: '', component: Layout,
-  children: [
-    {
-      path: '404',
-      loadComponent: () => import('./pages/not-found/not-found').then(c => c.NotFound),
-      data: { or: '404' } as ILayoutRouteData
-    },
-    {
-      path: 'about-us',
-      loadComponent: () => import('./pages/about-us/about-us').then(c => c.AboutUs),
-      data: { or: 'abs' } as ILayoutRouteData
-    },
-    {
-      path: 'profile',
-      loadComponent: () => import('./pages/profile/profile').then(c => c.Profile),
-      data: { or: 'prf' } as ILayoutRouteData
-    },
-    {
-      path: 'story/:tag',
-      loadComponent: () => import('./pages/story/story').then(c => c.Story),
-      data: { or: 's' } as ILayoutRouteData
-    },
-    {
-      path: 'vehicle/:brand/:model',
-      loadComponent: () => import('./pages/vehicle/vehicle').then(c => c.Vehicle),
-      data: { or: 'veh' } as ILayoutRouteData
-    },
-    {
-      path: 'login',
-      loadComponent: () => import('./pages/login-signup/login-signup').then(c => c.LoginSignup),
-      data: { or: 'lin' } as ILayoutRouteData
-    },
-    {
-      path: 'signup',
-      loadComponent: () => import('./pages/login-signup/login-signup').then(c => c.LoginSignup),
-      data: { or: 'sup' } as ILayoutRouteData
-    },
-    {
-      path: 'vehicle/:brand',
-      loadComponent: () => import('./pages/vehicle/vehicle').then(c => c.Vehicle),
-      data: { or: 'veh_br' } as ILayoutRouteData
-    },
-    {
-      path: 'unknown',
-      loadComponent: () => import('./pages/vehicle/vehicle').then(c => c.Vehicle),
-    },
-    {
-      path: 'transactions/:username',
-      loadComponent: () => import('./pages/transactions/transactions.component').then(c => c.TransactionsComponent),
-      data: { or: 'txn' } as ILayoutRouteData
-    },
-    {
-      path: '', pathMatch: 'full',
-      loadComponent: () => import('./pages/home/home').then(c => c.Home),
-      data: { or: 'h' } as ILayoutRouteData
-    }
-  ]
-}];
+export const routes: Routes = [
+  {
+    path: '', component: LayoutComponent,
+    children: [
+      {
+        path: 'signin',
+        loadComponent: () => import('./pages/auth/auth.component').then(c => c.AuthComponent),
+        data: { or: 'si' } as ILayoutRouteData
+      },
+      {
+        path: 'story/:tag',
+        loadComponent: () => import('./pages/story/story.component').then(c => c.StoryComponent),
+        data: { or: 's' } as ILayoutRouteData
+      },
+      {
+        path: '404',
+        loadComponent: () => import('./pages/not-found/not-found.component').then(c => c.NotFoundComponent),
+        data: { or: '404' } as ILayoutRouteData
+      },
+      {
+        path: '',
+        loadComponent: () => import('./pages/home/home.component').then(c => c.HomeComponent),
+        data: { or: 'h' } as ILayoutRouteData
+      }
+    ]
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
+  }
+];

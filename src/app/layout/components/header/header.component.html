@@ -1,0 +1,7 @@
+<p>header works!</p>
+
+@for (item of links; track $index) {
+  <div>
+    <a [routerLink]="item.path">{{item.label}}</a>
+  </div>
+}

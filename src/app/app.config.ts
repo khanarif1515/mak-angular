@@ -1,30 +1,16 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-import { ApiS, AuthS, EventS, PaymentS, ScriptLoaderS, SeoS, StorageS, UtilS, VarS } from './shared/services';
-import { httpInterceptor } from './shared/services/http-interceptor/http-interceptor';
-
-const Services = [
-  ApiS,
-  AuthS,
-  EventS,
-  PaymentS,
-  ScriptLoaderS,
-  SeoS,
-  StorageS,
-  UtilS,
-  VarS
-];
+import { httpInterceptorInterceptor } from './shared/services/http-interceptor/http-interceptor.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(withFetch(), withInterceptors([httpInterceptor])),
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes), provideClientHydration(withEventReplay()),
-    ...Services
+    provideHttpClient(withFetch(), withInterceptors([httpInterceptorInterceptor])),
+    provideRouter(routes),
+    provideClientHydration(withEventReplay())
   ]
 };

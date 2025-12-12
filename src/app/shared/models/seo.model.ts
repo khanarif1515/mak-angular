@@ -9,7 +9,7 @@ export const SEODATA: Record<TPageOrigins, ITagObj> = {
     keywords: '{{HOST_NAME}}, management, expense manage',
     image: '/images/home.png'
   },
-  abs: {
+  us: {
     title: 'About us | {{HOST_NAME}}',
     description: 'About {{HOST_NAME}}',
     keywords: 'about, {{HOST_NAME}}, about {{HOST_NAME}}',
@@ -21,26 +21,15 @@ export const SEODATA: Record<TPageOrigins, ITagObj> = {
   s: {
     title: 'Story | {{HOST_NAME}}'
   },
-  veh: {
-    title: 'Vehicles | {{HOST_NAME}}'
-  },
-  veh_br: {
-    title: 'Vehicles Brand | {{HOST_NAME}}'
-  },
-  lin: {
+  si: {
     title: 'Login | {{HOST_NAME}}',
     description: 'Continue with {{HOST_NAME}}',
     keywords: 'login {{HOST_NAME}},'
   },
-  sup: {
+  su: {
     title: 'Reister | {{HOST_NAME}}',
     description: 'Get started with {{HOST_NAME}}',
     keywords: 'register {{HOST_NAME}}, signup {{HOST_NAME}},'
-  },
-  txn: {
-    title: 'Transactions - {{USER_FULL_NAME}} | {{HOST_NAME}}',
-    description: 'Manage your transactions with {{HOST_NAME}}',
-    keywords: 'transactions, manage transactions, {{HOST_NAME}} transactions'
   },
   "404": {
     title: 'Page Not Found'
