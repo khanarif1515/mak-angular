@@ -99,7 +99,7 @@
               "sourceMap": true
             }
           },
-          "defaultConfiguration": "local"
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular/build:dev-server",
@@ -111,10 +111,10 @@
               "buildTarget": "mak:build:development"
             },
             "local": {
-              "buildTarget": "mak:build"
+              "buildTarget": "mak:build:local"
             }
           },
-          "defaultConfiguration": "local"
+          "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@angular/build:unit-test"
